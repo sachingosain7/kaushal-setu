@@ -1,0 +1,120 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        paper: {
+          50: "#FCFAF6",
+          100: "#FAF6EE",
+          200: "#F3EDE0",
+          300: "#E8DEC8",
+        },
+        ink: {
+          950: "#0D1627",
+          900: "#14213D",
+          800: "#1E293B",
+          700: "#334155",
+          600: "#475569",
+          500: "#64748B",
+          400: "#94A3B8",
+          300: "#CBD5E1",
+          200: "#E2E8F0",
+          100: "#F1F5F9",
+        },
+        saffron: {
+          DEFAULT: "#F28C28",
+          50: "#FFF7ED",
+          100: "#FFEDD5",
+          200: "#FED7AA",
+          500: "#F28C28",
+          600: "#EA580C",
+          700: "#C2410C",
+        },
+        emerald: {
+          DEFAULT: "#0F8B6D",
+          50: "#ECFDF5",
+          100: "#D1FAE5",
+          200: "#A7F3D0",
+          500: "#0F8B6D",
+          600: "#059669",
+          700: "#047857",
+        },
+        chakra: {
+          DEFAULT: "#2C3E9E",
+          50: "#EEF2FF",
+          100: "#E0E7FF",
+          200: "#C7D2FE",
+          500: "#2C3E9E",
+          600: "#243282",
+          700: "#1E2969",
+        },
+        coral: {
+          DEFAULT: "#E4572E",
+          50: "#FFF1F0",
+          100: "#FFE4E1",
+          200: "#FECDD3",
+          500: "#E4572E",
+          600: "#DC2626",
+          700: "#B91C1C",
+        },
+        sky: {
+          DEFAULT: "#0284C7",
+          50: "#F0F9FF",
+          100: "#E0F2FE",
+          200: "#BAE6FD",
+          500: "#0284C7",
+          600: "#0369A1",
+        },
+        gold: {
+          DEFAULT: "#E9B949",
+          50: "#FEFCE8",
+          100: "#FEF9C3",
+          200: "#FEF08A",
+          500: "#E9B949",
+          600: "#CA8A04",
+        },
+        // Domain specific semantic mappings
+        domain: {
+          stat: "#2C3E9E",
+          statBg: "#EEF2FF",
+          statBorder: "#C7D2FE",
+          tech: "#0284C7",
+          techBg: "#F0F9FF",
+          techBorder: "#BAE6FD",
+          gov: "#14213D",
+          govBg: "#F1F5F9",
+          govBorder: "#CBD5E1",
+          lead: "#D97706",
+          leadBg: "#FFFBEB",
+          leadBorder: "#FDE68A",
+        },
+      },
+      fontFamily: {
+        serif: ["Newsreader", "Georgia", "Cambria", "serif"],
+        sans: ["Plus Jakarta Sans", "Manrope", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "SFMono-Regular", "Menlo", "monospace"],
+        devanagari: ["Noto Sans Devanagari", "Mukta", "sans-serif"],
+      },
+      borderRadius: {
+        sm: "4px",
+        md: "6px",
+        lg: "10px",
+        full: "9999px",
+      },
+      boxShadow: {
+        subtle: "0 1px 2px 0 rgba(20, 33, 61, 0.05)",
+        card: "0 1px 3px 0 rgba(20, 33, 61, 0.08), 0 1px 2px -1px rgba(20, 33, 61, 0.06)",
+        dropdown: "0 10px 15px -3px rgba(20, 33, 61, 0.08), 0 4px 6px -4px rgba(20, 33, 61, 0.05)",
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;

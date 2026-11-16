@@ -1,0 +1,180 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String            @id @default(uuid())
+  email           String            @unique
+  name            String
+  designation     String
+  cadre           String            @default("SSS") // ISS, SSS, STATE_DES
+  division        String            @default("DIID") // NAD, SDRD, FOD, DPD, ESD, SSD, PRICE, DIID
+  role            String            @default("LEARNER") // LEARNER, TRAINER, ADMIN
+  experienceYears Int               @default(3)
+  qualification   String            @default("M.Sc. Statistics")
+  avatar          String?
+  learningHours   Float             @default(0.0)
+  streakDays      Int               @default(1)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  competencyScores UserCompetencyScore[]
+  enrollments      Enrollment[]
+  quizAttempts     QuizAttempt[]
+  createdQuizzes   Quiz[]
+  auditLogs        AuditLog[]
+}
+
+model Competency {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  domain      String   // STATISTICAL, TECHNICAL, DIGITAL_GOVERNANCE, BEHAVIOURAL
+  description String
+  maxLevel    Int      @default(5)
+  
+  benchmarks  RoleBenchmark[]
+  userScores  UserCompetencyScore[]
+  courseMaps  CourseCompetency[]
+}
+
+model RoleBenchmark {
+  id           String      @id @default(uuid())
+  cadre        String      // ISS, SSS, STATE_DES
+  designation  String
+  division     String      // NAD, SDRD, FOD, DPD, ESD, SSD, PRICE, DIID
+  competencyId String
+  targetLevel  Int         // 1 to 5
+  weight       Float       @default(1.0)
+  
+  competency   Competency  @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  @@unique([cadre, designation, division, competencyId])
+}
+
+model UserCompetencyScore {
+  id              String      @id @default(uuid())
+  userId          String
+  competencyId    String
+  currentLevel    Int         // 1 to 5
+  confidence      Float       @default(0.85)
+  lastAssessedAt  DateTime    @default(now())
+  assessedVia     String      @default("DIAGNOSTIC") // DIAGNOSTIC, QUIZ, IGOT_SYNC
+  
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  competency      Competency  @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  @@unique([userId, competencyId])
+}
+
+model Course {
+  id               String            @id @default(uuid())
+  externalId       String            @unique
+  title            String
+  provider         String            // "iGOT Karmayogi", "NSSTA Greater Noida"
+  type             String            @default("IGOT_DIGITAL") // IGOT_DIGITAL, NSSTA_TPAC_RESIDENTIAL, VIRTUAL_LAB
+  domain           String            // STATISTICAL, TECHNICAL, DIGITAL_GOVERNANCE, BEHAVIOURAL
+  durationHours    Float
+  level            Int               // 1 to 5
+  description      String
+  syllabus         String            // JSON string of modules
+  isTpacApproved   Boolean           @default(false)
+  tpacBatchDate    String?           // e.g. "15-26 March 2026"
+  tpacSeats        Int?
+  
+  enrollments      Enrollment[]
+  competencies     CourseCompetency[]
+}
+
+model CourseCompetency {
+  courseId     String
+  competencyId String
+  gainLevel    Int         @default(1)
+  
+  course       Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  competency   Competency  @relation(fields: [competencyId], references: [id], onDelete: Cascade)
+  @@id([courseId, competencyId])
+}
+
+model Enrollment {
+  id           String      @id @default(uuid())
+  userId       String
+  courseId     String
+  status       String      @default("ENROLLED") // ENROLLED, IN_PROGRESS, COMPLETED
+  progressPct  Int         @default(0)
+  syncedIgot   Boolean     @default(true)
+  certificate  String?
+  startedAt    DateTime    @default(now())
+  completedAt  DateTime?
+  
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course       Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  @@unique([userId, courseId])
+}
+
+model Quiz {
+  id              String         @id @default(uuid())
+  title           String
+  description     String
+  domain          String
+  division        String?
+  sourceFileName  String?
+  sourceSnippet   String?
+  status          String         @default("DRAFT") // DRAFT, REVIEWED, PUBLISHED, ARCHIVED
+  targetCohort    String?
+  createdById     String
+  createdAt       DateTime       @default(now())
+  
+  creator         User           @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  questions       QuizQuestion[]
+  attempts        QuizAttempt[]
+}
+
+model QuizQuestion {
+  id             String      @id @default(uuid())
+  quizId         String
+  questionText   String
+  optionA        String
+  optionB        String
+  optionC        String
+  optionD        String
+  correctOption  String      // "A", "B", "C", "D"
+  explanation    String
+  difficulty     String      @default("MEDIUM") // EASY, MEDIUM, HARD
+  bloomLevel     String      @default("UNDERSTAND") // REMEMBER, UNDERSTAND, APPLY, ANALYZE, EVALUATE, CREATE
+  sourceChunkRef String?
+  orderIndex     Int         @default(0)
+  
+  quiz           Quiz        @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model QuizAttempt {
+  id             String      @id @default(uuid())
+  quizId         String
+  userId         String
+  score          Int
+  totalQuestions Int
+  percentage     Float
+  passed         Boolean
+  answersJson    String      // JSON map
+  feedback       String
+  attemptedAt    DateTime    @default(now())
+  
+  quiz           Quiz        @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  action     String
+  resource   String
+  ipAddress  String   @default("10.20.1.104")
+  details    String   // JSON string
+  timestamp  DateTime @default(now())
+  
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}

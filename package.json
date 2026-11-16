@@ -1,0 +1,22 @@
+{
+  "name": "kaushal-setu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kaushal Setu (कौशल सेतु) - AI Skill Intelligence & Learning Platform for India's Official Statistical System (MoSPI / DIID)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "setup": "node server.js --init-db",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "sih2026",
+    "mospi",
+    "official-statistics",
+    "igot-karmayogi",
+    "competency-based-training"
+  ],
+  "author": "Sachin Gosain, Shanu Kumar, Ali Sayam",
+  "license": "MIT"
+}
