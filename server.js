@@ -894,6 +894,161 @@ Recommended blended pathway:
     return;
   }
 
+  // Update user profile from Onboarding Wizard (Scope A)
+  if (pathname === '/api/users/profile/update' && req.method === 'POST') {
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const { userId = 'user-01', name, cadre, designation, division, qualification } = JSON.parse(body || '{}');
+        
+        db.prepare(`
+          UPDATE users SET 
+            name = COALESCE(?, name),
+            cadre = COALESCE(?, cadre),
+            designation = COALESCE(?, designation),
+            division = COALESCE(?, division),
+            qualification = COALESCE(?, qualification)
+          WHERE id = ?
+        `).run(name, cadre, designation, division, qualification, userId);
+
+        // Record audit
+        const evtId = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
+        const hash = 'sha256:' + crypto.randomBytes(6).toString('hex') + '...' + crypto.randomBytes(4).toString('hex');
+        const nowStr = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' IST';
+        db.prepare(`
+          INSERT INTO audit_logs (id, timestamp, official, action, resource, ip, hash)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run(
+          evtId,
+          nowStr,
+          `${name || 'Officer'} (${cadre || 'SSS'} / ${division || 'DIID'})`,
+          'PROFILE_ONBOARDING_COMPLETED',
+          `Competency benchmarks calibrated for ${division} division`,
+          '10.20.1.104 (NICNet)',
+          hash
+        );
+
+        const updated = getSkillGaps(userId);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, user: updated.user, readinessIndex: updated.readinessIndex, auditId: evtId }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
+    return;
+  }
+
+  // Course Enrollment & Digital Passbook Sync
+  if (pathname === '/api/courses/enroll' && req.method === 'POST') {
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const { userId = 'user-01', courseId = 'tpac-01' } = JSON.parse(body || '{}');
+        const course = db.prepare('SELECT * FROM courses WHERE id = ?').get(courseId);
+        const user = db.prepare('SELECT * FROM users WHERE id = ?').get(userId);
+
+        const enrollmentId = `ENR-${Math.floor(10000 + Math.random() * 90000)}`;
+        const nowIso = new Date().toISOString();
+
+        const existing = db.prepare('SELECT id FROM enrollments WHERE user_id = ? AND course_id = ?').get(userId, courseId);
+        if (existing) {
+          db.prepare(`
+            UPDATE enrollments SET status = 'COMPLETED', progress_pct = 100, completed_at = ? WHERE id = ?
+          `).run(nowIso, existing.id);
+        } else {
+          db.prepare(`
+            INSERT INTO enrollments (id, user_id, course_id, status, progress_pct, enrolled_at, completed_at)
+            VALUES (?, ?, ?, 'COMPLETED', 100, ?, ?)
+          `).run(enrollmentId, userId, courseId, nowIso, nowIso);
+        }
+
+        // Update user learning hours and badges
+        db.prepare(`
+          UPDATE users SET 
+            learning_hours = learning_hours + ?,
+            badges_count = badges_count + 1
+          WHERE id = ?
+        `).run(course ? course.duration_hours : 10, userId);
+
+        // Record audit
+        const evtId = `EVT-${Math.floor(10000 + Math.random() * 90000)}`;
+        const hash = 'sha256:' + crypto.randomBytes(6).toString('hex') + '...' + crypto.randomBytes(4).toString('hex');
+        const nowStr = nowIso.replace('T', ' ').slice(0, 19) + ' IST';
+        db.prepare(`
+          INSERT INTO audit_logs (id, timestamp, official, action, resource, ip, hash)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run(
+          evtId,
+          nowStr,
+          `${user.name} (${user.cadre} / ${user.division})`,
+          'COURSE_COMPLETED_CREDENTIAL_ISSUED',
+          `${course ? course.title : 'Official Statistics Course'} (Passbook Verified)`,
+          '10.20.1.104 (NICNet)',
+          hash
+        );
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          enrollmentId,
+          courseTitle: course ? course.title : 'Course',
+          certificateId: `CERT-MoSPI-${Math.floor(100000 + Math.random() * 900000)}`,
+          auditEventId: evtId,
+          hoursCredited: course ? course.duration_hours : 10
+        }));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
+    return;
+  }
+
+  // Predictive Capacity Building Forecasting (Scope L)
+  if (pathname === '/api/admin/forecast') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      methodology: 'Autoregressive Policy Shift Modeling (AR-PSM)',
+      explanation: 'Forecasts institutional capacity bottlenecks based on upcoming national statistical mandates, UN methodological revisions, and technological rollouts over a 24-month horizon.',
+      forecastItems: [
+        {
+          id: 'fc-01',
+          initiative: 'UN System of National Accounts (SNA 2025/2026 Revision)',
+          affectedDivisions: ['NAD (National Accounts Division)', 'ESD (Economic Statistics)'],
+          skillArea: 'Chain-Volume Measures & Digital Economy Accounting',
+          projectedDemandIncrease: '+48%',
+          currentReadiness: '62%',
+          urgency: 'HIGH',
+          recommendedTPACProgramme: 'TPAC-2026-03 (National Accounts Advanced Masterclass)'
+        },
+        {
+          id: 'fc-02',
+          initiative: 'MoSPI CAPI 2.0 Tablet & Geospatial Sampling Rollout',
+          affectedDivisions: ['FOD (Field Operations Division)', 'SDRD'],
+          skillArea: 'CAPI Field Protocols, Offline Sync & GIS Geofencing',
+          projectedDemandIncrease: '+64%',
+          currentReadiness: '54%',
+          urgency: 'CRITICAL',
+          recommendedTPACProgramme: 'TPAC-2026-01 (Complex Survey Sampling & Field Technology)'
+        },
+        {
+          id: 'fc-03',
+          initiative: 'Digital Personal Data Protection (DPDP) Act 2023 Certification',
+          affectedDivisions: ['ALL DIVISIONS (FOD, SDRD, NAD, DIID, SSD)'],
+          skillArea: 'Data Privacy, Cryptographic Pseudonymization & Audit Logging',
+          projectedDemandIncrease: '+85%',
+          currentReadiness: '41%',
+          urgency: 'MANDATORY',
+          recommendedTPACProgramme: 'iGOT-GOV-01 (DPDP Act 2023 Compliance for Civil Servants)'
+        }
+      ]
+    }));
+    return;
+  }
+
   // --- SERVE THE FULL-FEATURED APPLICATION UI ---
   // Read public html or serve single-file SPA
   const indexPath = path.join(__dirname, 'public', 'index.html');

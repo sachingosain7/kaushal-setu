@@ -101,3 +101,49 @@ test('AI Assistant Grounded MoSPI Methodological Guidance', async () => {
   assert.ok(data.reply.includes('Horvitz-Thompson') || data.reply.includes('multiplier'));
   assert.ok(data.sourcesCited.includes('MoSPI SDRD Survey Manual'));
 });
+
+test('Profile Onboarding Calibration & Benchmarking (Scope A)', async () => {
+  const res = await fetch(`${BASE_URL}/api/users/profile/update`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      userId: 'user-01',
+      name: 'Sachin Gosain',
+      cadre: 'SSS',
+      designation: 'Senior Statistical Officer',
+      division: 'DIID',
+      qualification: 'M.Sc. Statistics'
+    })
+  });
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.equal(data.user.name, 'Sachin Gosain');
+  assert.equal(data.user.division, 'DIID');
+  assert.ok(data.auditId.startsWith('EVT-'));
+});
+
+test('Course Enrollment & Digital Passbook Sync', async () => {
+  const res = await fetch(`${BASE_URL}/api/courses/enroll`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: 'user-01', courseId: 'tpac-01' })
+  });
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.equal(data.success, true);
+  assert.ok(data.certificateId.startsWith('CERT-MoSPI-'));
+  assert.ok(data.auditEventId.startsWith('EVT-'));
+  assert.equal(data.hoursCredited, 60);
+});
+
+test('Predictive Capacity Demand Forecasting (Scope L)', async () => {
+  const res = await fetch(`${BASE_URL}/api/admin/forecast`);
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.ok(data.forecastItems.length >= 3);
+  const fc1 = data.forecastItems[0];
+  assert.ok(fc1.initiative.includes('UN System of National Accounts'));
+  assert.ok(fc1.projectedDemandIncrease.includes('+48%'));
+});
+

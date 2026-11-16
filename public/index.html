@@ -162,6 +162,13 @@
         <svg class="w-4 h-4 text-ink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
         <span class="txt-nav-dashboard">Dashboard</span>
       </a>
+      <a href="#onboarding" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-ink-700 hover:bg-paper-100">
+        <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span class="flex-1 flex justify-between items-center">
+          <span>Profile Builder</span>
+          <span class="text-[9px] font-mono px-1 rounded bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">AUTO</span>
+        </span>
+      </a>
       <a href="#gaps" class="nav-link flex items-center gap-2.5 px-3 py-2 rounded-md text-xs font-medium text-ink-700 hover:bg-paper-100">
         <svg class="w-4 h-4 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         <span class="txt-nav-gaps">Skill-Gap Matrix</span>
@@ -338,6 +345,167 @@
               <span class="px-3 py-1.5 bg-ink-900 text-white text-xs font-semibold rounded">Launch Admin</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2.5: ONBOARDING & AUTOMATED PROFILE BUILDER (SCOPE A) -->
+      <section id="view-onboarding" class="app-view space-y-6 max-w-3xl mx-auto">
+        <div class="gov-card p-6 sm:p-8 bg-white space-y-6">
+          <div class="border-b border-ink-100 pb-4">
+            <span class="text-xs font-mono font-bold text-emerald-800 uppercase bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+              Scope A · FRAC Automated Profiling
+            </span>
+            <h2 class="font-serif font-bold text-2xl text-ink-950 mt-1">Official Statistical Competency Profiling</h2>
+            <p class="text-xs text-ink-600">
+              Under Mission Karmayogi (NPCSCB) guidelines, official competency benchmarks are automatically synthesized from your civil service cadre, division assignment, and technical qualifications.
+            </p>
+          </div>
+
+          <form id="form-onboarding" onsubmit="handleOnboardingSubmit(event)" class="space-y-6">
+            <!-- Step 1: Cadre & Designation -->
+            <div class="space-y-3">
+              <h3 class="font-serif font-bold text-base text-ink-950 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-chakra text-white text-xs flex items-center justify-center font-mono">1</span>
+                <span>Civil Service Cadre & Grade</span>
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Full Name</label>
+                  <input type="text" id="onboard-name" value="Sachin Gosain" required class="w-full p-2.5 text-xs rounded border border-ink-200 font-sans">
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Service Cadre</label>
+                  <select id="onboard-cadre" onchange="updateOnboardBenchmarks()" class="w-full p-2.5 text-xs rounded border border-ink-200 bg-white font-mono">
+                    <option value="SSS" selected>Subordinate Statistical Service (SSS)</option>
+                    <option value="ISS">Indian Statistical Service (ISS - Group A)</option>
+                    <option value="CONTRACT">Contractual / Technical Consultant</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Designation</label>
+                  <select id="onboard-designation" onchange="updateOnboardBenchmarks()" class="w-full p-2.5 text-xs rounded border border-ink-200 bg-white font-mono">
+                    <option value="Senior Statistical Officer" selected>Senior Statistical Officer (SSO)</option>
+                    <option value="Junior Statistical Officer">Junior Statistical Officer (JSO)</option>
+                    <option value="Assistant Director">Assistant Director (AD)</option>
+                    <option value="Deputy Director">Deputy Director (DD)</option>
+                    <option value="Joint Director">Joint Director (JD)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Experience in Official Statistics</label>
+                  <select id="onboard-experience" class="w-full p-2.5 text-xs rounded border border-ink-200 bg-white font-mono">
+                    <option value="2">1–3 Years (Induction Phase)</option>
+                    <option value="5" selected>4–7 Years (Operational Execution)</option>
+                    <option value="10">8–15 Years (Supervisory & Policy)</option>
+                    <option value="20">15+ Years (Executive Direction)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2: MoSPI Division & Lifecycle Role -->
+            <div class="space-y-3 pt-3 border-t border-ink-100">
+              <h3 class="font-serif font-bold text-base text-ink-950 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-saffron text-white text-xs flex items-center justify-center font-mono">2</span>
+                <span>MoSPI Division & Statistical Lifecycle Stage</span>
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Current Division</label>
+                  <select id="onboard-division" onchange="updateOnboardBenchmarks()" class="w-full p-2.5 text-xs rounded border border-ink-200 bg-white font-mono">
+                    <option value="DIID" selected>Data Informatics & Innovation Division (DIID)</option>
+                    <option value="SDRD">Survey Design & Research Division (SDRD)</option>
+                    <option value="FOD">Field Operations Division (FOD)</option>
+                    <option value="NAD">National Accounts Division (NAD)</option>
+                    <option value="ESD">Economic Statistics Division (ESD)</option>
+                    <option value="SSD">Social Statistics Division (SSD)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-ink-900 mb-1">Primary Lifecycle Focus</label>
+                  <input type="text" id="onboard-focus" readonly value="Data Processing, Dissemination & DPI" class="w-full p-2.5 text-xs rounded border border-ink-200 bg-paper-100 font-mono text-ink-700">
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3: Qualifications & Tools -->
+            <div class="space-y-3 pt-3 border-t border-ink-100">
+              <h3 class="font-serif font-bold text-base text-ink-950 flex items-center gap-2">
+                <span class="w-6 h-6 rounded-full bg-emerald-700 text-white text-xs flex items-center justify-center font-mono">3</span>
+                <span>Academic Credentials & Toolchain</span>
+              </h3>
+              <div>
+                <label class="block text-xs font-semibold text-ink-900 mb-1">Highest Qualification</label>
+                <input type="text" id="onboard-qualification" value="M.Sc. Statistics (University of Delhi)" class="w-full p-2.5 text-xs rounded border border-ink-200 font-sans">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-ink-900 mb-1.5">Proficient Toolsets & Methodologies (Select all verified):</label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" checked class="accent-chakra"> <span>Python</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" class="accent-chakra"> <span>R (CRAN)</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" checked class="accent-chakra"> <span>SQL / SQLite</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" class="accent-chakra"> <span>QGIS / GIS</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" checked class="accent-chakra"> <span>CAPI / Tablets</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" class="accent-chakra"> <span>Stata</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" class="accent-chakra"> <span>SPSS</span>
+                  </label>
+                  <label class="flex items-center gap-2 p-2 rounded bg-paper-50 border border-ink-200 cursor-pointer">
+                    <input type="checkbox" checked class="accent-chakra"> <span>DPDP Act 2023</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Calibrated Benchmark Summary Preview -->
+            <div class="p-4 bg-paper-50 rounded-md border border-ink-300 space-y-2">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-mono font-bold text-ink-950 uppercase">Auto-Calibrated Role Target Benchmark</span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-chakra text-white font-bold" id="lbl-onboard-benchmark">DIID Benchmark Level 4.0</span>
+              </div>
+              <p class="text-[11px] text-ink-600">
+                Based on your designation as <strong id="lbl-onboard-desig">Senior Statistical Officer</strong> in <strong id="lbl-onboard-div">DIID</strong>, the framework calibrates <strong>33 competencies</strong>:
+              </p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono pt-1">
+                <div class="p-2 bg-white rounded border border-ink-200">
+                  <span class="block text-[10px] text-ink-500">Statistical</span>
+                  <span class="font-bold text-chakra">Target L4</span>
+                </div>
+                <div class="p-2 bg-white rounded border border-ink-200">
+                  <span class="block text-[10px] text-ink-500">Technical</span>
+                  <span class="font-bold text-sky-700">Target L4</span>
+                </div>
+                <div class="p-2 bg-white rounded border border-ink-200">
+                  <span class="block text-[10px] text-ink-500">Governance</span>
+                  <span class="font-bold text-ink-900">Target L4</span>
+                </div>
+                <div class="p-2 bg-white rounded border border-ink-200">
+                  <span class="block text-[10px] text-ink-500">Behavioural</span>
+                  <span class="font-bold text-amber-700">Target L3.5</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2 flex justify-between items-center">
+              <span class="text-xs font-mono text-ink-500">Synced with Karmayogi Bharat SPV & MoSPI HRMS</span>
+              <button type="submit" id="btn-save-onboarding" class="px-6 py-2.5 bg-saffron hover:bg-saffron-600 text-white font-semibold text-xs rounded-md shadow-xs flex items-center gap-2 transition-colors">
+                <span>Save Profile & Enter Platform</span>
+                <span>→</span>
+              </button>
+            </div>
+          </form>
         </div>
       </section>
 
@@ -885,34 +1053,134 @@ GROUP BY sector;</textarea>
 
       <!-- VIEW 10: ADMIN HEATMAP & FORECASTING -->
       <section id="view-admin" class="app-view space-y-6">
-        <div class="flex justify-between items-center pb-3 border-b border-ink-200">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-ink-200 gap-2">
           <div>
-            <h2 class="font-serif font-bold text-2xl text-ink-950">MoSPI Institutional Capacity Heatmap</h2>
-            <p class="text-xs text-ink-600">Division × Domain competency matrix across all 186 statistical personnel.</p>
+            <h2 class="font-serif font-bold text-2xl text-ink-950">MoSPI Institutional Capacity Intelligence</h2>
+            <p class="text-xs text-ink-600">Division × Domain competency matrix across all 186 statistical personnel with predictive capacity forecasting.</p>
           </div>
-          <button onclick="alert('Exporting official ACBP capacity report as CSV/PDF...')" class="px-3.5 py-1.5 bg-ink-900 text-white text-xs font-semibold rounded">Export CSV</button>
+          <div class="flex items-center gap-2">
+            <button onclick="downloadAdminCSV()" class="px-3.5 py-1.5 bg-ink-900 hover:bg-saffron text-white text-xs font-semibold rounded shadow-xs transition-colors flex items-center gap-1.5">
+              <span>📥 Export CSV</span>
+            </button>
+          </div>
         </div>
 
+        <!-- Heatmap Table Card -->
         <div class="gov-card bg-white p-5 space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-ink-100 text-xs">
+            <span class="font-mono font-bold text-ink-900 uppercase">Division × Domain Competency Heatmap</span>
+            <span class="text-[11px] font-mono text-ink-500">Benchmark Target: Level 4.0</span>
+          </div>
+
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs font-mono">
               <thead class="bg-paper-50 border-b border-ink-200 text-ink-700 font-bold uppercase">
                 <tr>
-                  <th class="p-2.5">Division</th>
+                  <th class="p-2.5">Division / Department</th>
                   <th class="p-2.5 text-center">Statistical (10)</th>
                   <th class="p-2.5 text-center">Technical (12)</th>
                   <th class="p-2.5 text-center">Governance (5)</th>
                   <th class="p-2.5 text-center">Behavioural (6)</th>
-                  <th class="p-2.5 text-right">Readiness</th>
+                  <th class="p-2.5 text-right">Readiness Index</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-ink-100">
-                <tr><td class="p-2.5 font-sans font-bold">National Accounts Division (NAD)</td><td class="p-2.5 text-center text-emerald-700 font-bold">L4.2</td><td class="p-2.5 text-center">L3.5</td><td class="p-2.5 text-center">L3.8</td><td class="p-2.5 text-center">L3.9</td><td class="p-2.5 text-right font-bold">86%</td></tr>
-                <tr><td class="p-2.5 font-sans font-bold">Survey Design & Research (SDRD)</td><td class="p-2.5 text-center text-emerald-700 font-bold">L4.5</td><td class="p-2.5 text-center">L3.8</td><td class="p-2.5 text-center">L3.2</td><td class="p-2.5 text-center">L3.6</td><td class="p-2.5 text-right font-bold">88%</td></tr>
-                <tr><td class="p-2.5 font-sans font-bold">Field Operations Division (FOD)</td><td class="p-2.5 text-center text-coral-700 font-bold">L3.2</td><td class="p-2.5 text-center text-coral-700 font-bold">L2.8</td><td class="p-2.5 text-center">L3.4</td><td class="p-2.5 text-center">L3.2</td><td class="p-2.5 text-right font-bold text-coral-700">68%</td></tr>
-                <tr><td class="p-2.5 font-sans font-bold">Data Informatics & Innovation (DIID)</td><td class="p-2.5 text-center">L3.7</td><td class="p-2.5 text-center text-emerald-700 font-bold">L4.6</td><td class="p-2.5 text-center">L4.2</td><td class="p-2.5 text-center">L3.8</td><td class="p-2.5 text-right font-bold">91%</td></tr>
+                <tr class="hover:bg-paper-50">
+                  <td class="p-2.5 font-sans font-bold text-ink-950">National Accounts Division (NAD)</td>
+                  <td class="p-2.5 text-center text-emerald-700 font-bold bg-emerald-50/50">L4.2</td>
+                  <td class="p-2.5 text-center">L3.5</td>
+                  <td class="p-2.5 text-center">L3.8</td>
+                  <td class="p-2.5 text-center">L3.9</td>
+                  <td class="p-2.5 text-right font-bold text-emerald-700">86%</td>
+                </tr>
+                <tr class="hover:bg-paper-50">
+                  <td class="p-2.5 font-sans font-bold text-ink-950">Survey Design & Research (SDRD)</td>
+                  <td class="p-2.5 text-center text-emerald-700 font-bold bg-emerald-50/50">L4.5</td>
+                  <td class="p-2.5 text-center">L3.8</td>
+                  <td class="p-2.5 text-center">L3.2</td>
+                  <td class="p-2.5 text-center">L3.6</td>
+                  <td class="p-2.5 text-right font-bold text-emerald-700">88%</td>
+                </tr>
+                <tr class="hover:bg-paper-50">
+                  <td class="p-2.5 font-sans font-bold text-ink-950">Field Operations Division (FOD)</td>
+                  <td class="p-2.5 text-center text-coral-700 font-bold bg-coral-50/50">L3.2</td>
+                  <td class="p-2.5 text-center text-coral-700 font-bold bg-coral-50/50">L2.8</td>
+                  <td class="p-2.5 text-center">L3.4</td>
+                  <td class="p-2.5 text-center">L3.2</td>
+                  <td class="p-2.5 text-right font-bold text-coral-700">68%</td>
+                </tr>
+                <tr class="hover:bg-paper-50">
+                  <td class="p-2.5 font-sans font-bold text-ink-950">Data Informatics & Innovation (DIID)</td>
+                  <td class="p-2.5 text-center">L3.7</td>
+                  <td class="p-2.5 text-center text-emerald-700 font-bold bg-emerald-50/50">L4.6</td>
+                  <td class="p-2.5 text-center text-emerald-700 font-bold bg-emerald-50/50">L4.2</td>
+                  <td class="p-2.5 text-center">L3.8</td>
+                  <td class="p-2.5 text-right font-bold text-emerald-700">91%</td>
+                </tr>
+                <tr class="hover:bg-paper-50">
+                  <td class="p-2.5 font-sans font-bold text-ink-950">Social Statistics Division (SSD)</td>
+                  <td class="p-2.5 text-center">L3.6</td>
+                  <td class="p-2.5 text-center">L3.4</td>
+                  <td class="p-2.5 text-center">L3.7</td>
+                  <td class="p-2.5 text-center">L3.8</td>
+                  <td class="p-2.5 text-right font-bold">78%</td>
+                </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Predictive Capacity Building Demand Forecasting (Scope L) -->
+        <div class="gov-card bg-white p-5 space-y-4">
+          <div class="pb-2 border-b border-ink-100 flex justify-between items-center">
+            <div>
+              <span class="text-xs font-mono font-bold text-saffron uppercase">Predictive Capacity Intelligence</span>
+              <h3 class="font-serif font-bold text-lg text-ink-950 mt-0.5">24-Month Capacity Demand Forecasting Model</h3>
+              <p class="text-xs text-ink-600">Model: Autoregressive Policy Shift Modeling (AR-PSM). Explains emerging capacity bottlenecks before operational failure.</p>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-chakra text-white font-bold">MoSPI ACBP 2026</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="grid-admin-forecast">
+            <!-- Dynamically populated or rendered -->
+            <div class="p-4 rounded-md bg-paper-50 border border-ink-200 space-y-2 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-serif font-bold text-ink-950">UN SNA 2025/2026 Revision</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-coral-50 text-coral-700 font-bold border border-coral-200">+48% Surge</span>
+              </div>
+              <p class="text-ink-600 text-[11px]">
+                Transition to chain-volume measures and digital economy asset accounting impacts National Accounts Division (NAD).
+              </p>
+              <div class="text-[10px] font-mono text-ink-500 pt-1 border-t border-ink-200">
+                Action: Mandate NSSTA TPAC Masterclass TPAC-2026-03
+              </div>
+            </div>
+
+            <div class="p-4 rounded-md bg-paper-50 border border-ink-200 space-y-2 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-serif font-bold text-ink-950">CAPI 2.0 Tablet Rollout</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-coral-50 text-coral-700 font-bold border border-coral-200">+64% Surge</span>
+              </div>
+              <p class="text-ink-600 text-[11px]">
+                Offline GIS geofencing and encrypted field packet synchronization across 80 FOD regional offices.
+              </p>
+              <div class="text-[10px] font-mono text-ink-500 pt-1 border-t border-ink-200">
+                Action: Batch enrollment in iGOT CAPI Field Modules
+              </div>
+            </div>
+
+            <div class="p-4 rounded-md bg-paper-50 border border-ink-200 space-y-2 text-xs">
+              <div class="flex justify-between items-center">
+                <span class="font-serif font-bold text-ink-950">DPDP Act 2023 Certification</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-saffron-100 text-saffron-800 font-bold border border-saffron-300">+85% Surge</span>
+              </div>
+              <p class="text-ink-600 text-[11px]">
+                Mandatory microdata pseudonymization and consent verification for all surveyed households.
+              </p>
+              <div class="text-[10px] font-mono text-ink-500 pt-1 border-t border-ink-200">
+                Action: Mandatory iGOT Data Privacy Certification
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -978,6 +1246,125 @@ GROUP BY sector;</textarea>
       </section>
 
     </main>
+  </div>
+
+  <!-- MODAL: COURSE DETAIL & iGOT KARMAYOGI LEARNING SIMULATOR -->
+  <div id="modal-course-player" class="fixed inset-0 z-50 bg-ink-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto" style="display: none;">
+    <div class="gov-card bg-white max-w-3xl w-full max-h-[92vh] overflow-y-auto rounded-lg shadow-2xl border border-ink-300 flex flex-col relative">
+      
+      <!-- Modal Header -->
+      <div class="sticky top-0 bg-white z-10 px-6 py-4 border-b border-ink-200 flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="player-modal-provider" class="text-[10px] font-mono px-2 py-0.5 rounded bg-saffron-100 text-saffron-800 font-bold border border-saffron-200">
+              iGOT Karmayogi Digital Micro-Module
+            </span>
+            <span id="player-modal-hours" class="text-[10px] font-mono text-ink-500">12 hrs</span>
+          </div>
+          <h3 id="player-modal-title" class="font-serif font-bold text-lg text-ink-950 mt-1">
+            Complex Survey Design & Sampling Frames
+          </h3>
+        </div>
+        <button onclick="closeCourseModal()" class="w-8 h-8 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 font-bold flex items-center justify-center transition-colors shadow-2xs">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 space-y-6 text-xs text-ink-900 font-sans">
+        
+        <!-- Interactive Simulated Video / Media Reader Player Area -->
+        <div class="gov-card bg-ink-950 text-white p-6 rounded-lg space-y-4">
+          <div class="flex justify-between items-center text-[11px] font-mono text-paper-200">
+            <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Sunbird SCORM Stream Active</span>
+            <span>Module 2 of 4</span>
+          </div>
+
+          <div class="py-8 text-center space-y-3">
+            <div class="w-16 h-16 rounded-full bg-white/10 mx-auto flex items-center justify-center text-2xl hover:bg-saffron transition-colors cursor-pointer" onclick="togglePlayerSimulation()">
+              ▶
+            </div>
+            <div class="font-serif text-base text-paper-100 font-bold" id="player-stream-status">
+              NSS 80th Round Multi-Stage Sampling & Frame Construction
+            </div>
+            <p class="text-xs text-ink-400 max-w-md mx-auto">
+              Simulated video lecture and interactive syllabus reader synchronized with Karmayogi Bharat SPV learning telemetry.
+            </p>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="space-y-1">
+            <div class="flex justify-between text-[10px] font-mono text-paper-300">
+              <span>Module Progress:</span>
+              <span id="player-stream-progress">100% Completed</span>
+            </div>
+            <div class="w-full bg-ink-800 h-2 rounded-full overflow-hidden">
+              <div id="bar-stream-progress" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Syllabus Breakdown -->
+        <div class="space-y-2">
+          <h4 class="font-serif font-bold text-sm text-ink-950">Curriculum & Learning Outcomes</h4>
+          <div class="space-y-2" id="player-modal-syllabus">
+            <div class="p-3 rounded bg-paper-50 border border-ink-200 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-ink-900">Module 1: Sampling Frame Formulation & Census FSU Listing</span>
+                <p class="text-[11px] text-ink-600">Definition of UFS urban blocks and rural census villages.</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-700 font-bold">✓ Complete</span>
+            </div>
+            <div class="p-3 rounded bg-paper-50 border border-ink-200 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-ink-900">Module 2: Second Stage Strata (SSS) & Household Random Sampling</span>
+                <p class="text-[11px] text-ink-600">SRSWOR selection to eliminate socio-economic variance bias.</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-700 font-bold">✓ Complete</span>
+            </div>
+            <div class="p-3 rounded bg-paper-50 border border-ink-200 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-ink-900">Module 3: Horvitz-Thompson Multiplier Weight Calculation</span>
+                <p class="text-[11px] text-ink-600">Formulating inverse joint probability weights for national aggregates.</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-700 font-bold">✓ Complete</span>
+            </div>
+            <div class="p-3 rounded bg-paper-50 border border-ink-200 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-ink-900">Module 4: Quality Assessment & UN NQAF Standards</span>
+                <p class="text-[11px] text-ink-600">Verification of sampling errors and non-response adjustment.</p>
+              </div>
+              <span class="text-[10px] font-mono text-emerald-700 font-bold">✓ Complete</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credential Award Box (Shown on Completion) -->
+        <div id="player-credential-box" class="p-4 bg-emerald-50 border border-emerald-300 rounded-lg space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-full bg-emerald-700 text-white text-xs flex items-center justify-center font-bold">✓</span>
+              <span class="font-serif font-bold text-sm text-emerald-950">W3C Verifiable Credential Issued</span>
+            </div>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-600 text-white font-bold" id="lbl-cert-id">CERT-MoSPI-264781</span>
+          </div>
+          <p class="text-[11px] text-emerald-900">
+            This module completion has been cryptographically signed and credited to your official civil service digital passbook. Your total learning hours and badges have been updated on your dashboard.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="sticky bottom-0 bg-paper-50 px-6 py-3 border-t border-ink-200 flex justify-between items-center text-xs font-mono">
+        <span class="text-ink-500">iGOT Karmayogi Bharat SPV · Telemetry Sync Active</span>
+        <button onclick="handleClaimCourseCredential()" id="btn-claim-credential" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded font-sans font-semibold transition-colors flex items-center gap-2">
+          <span>Complete Module & Sync Passbook</span>
+          <span>✓</span>
+        </button>
+      </div>
+
+    </div>
   </div>
 
   <!-- SIH 26101 OFFICIAL PROBLEM STATEMENT MODAL (Recreates exact SIH portal dialog with Solution Map) -->
@@ -1308,8 +1695,9 @@ GROUP BY sector;</textarea>
             <p class="text-xs text-ink-600 line-clamp-2">${c.description}</p>
             ${c.tpac_batch_date ? `<div class="p-2 bg-chakra-50 border border-chakra-200 rounded text-xs font-semibold text-chakra-900">📅 Scheduled: ${c.tpac_batch_date} (${c.tpac_seats} Seats Left)</div>` : ''}
           </div>
-          <button onclick="alert('Enrolled via iGOT Karmayogi API adapter. Synced with Competency Passbook!')" class="w-full py-2 bg-ink-900 hover:bg-saffron text-white text-xs font-semibold rounded transition-colors">
-            Enroll & Sync Passbook
+          <button onclick="openCourseModal('${c.id}')" class="w-full py-2 bg-ink-900 hover:bg-saffron text-white text-xs font-semibold rounded transition-colors flex items-center justify-center gap-1.5">
+            <span>Launch Module & iGOT Simulator</span>
+            <span>→</span>
           </button>
         </div>
       `).join('');
@@ -1613,6 +2001,125 @@ GROUP BY sector;</textarea>
       } catch (err) {
         document.getElementById('assessment-player-card').style.display = 'none';
         document.getElementById('assessment-results-box').style.display = 'block';
+      }
+    }
+
+    // --- MILESTONE EXTENSIONS: COURSE PLAYER, ONBOARDING, CSV EXPORT, AUDIO ---
+    let activePlayerCourseId = 'tpac-01';
+
+    function openCourseModal(courseId) {
+      activePlayerCourseId = courseId || 'tpac-01';
+      document.getElementById('modal-course-player').style.display = 'flex';
+      document.getElementById('player-credential-box').style.display = 'none';
+      document.getElementById('btn-claim-credential').style.display = 'inline-flex';
+    }
+
+    function closeCourseModal() {
+      document.getElementById('modal-course-player').style.display = 'none';
+    }
+
+    let isStreamPlaying = true;
+    function togglePlayerSimulation() {
+      isStreamPlaying = !isStreamPlaying;
+      document.getElementById('player-stream-status').innerText = isStreamPlaying
+        ? 'NSS 80th Round Multi-Stage Sampling & Frame Construction'
+        : 'Stream Paused (Click ▶ to Resume)';
+    }
+
+    async function handleClaimCourseCredential() {
+      try {
+        const res = await fetch('/api/courses/enroll', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: 'user-01', courseId: activePlayerCourseId })
+        });
+        const data = await res.json();
+        if (data.certificateId) {
+          document.getElementById('lbl-cert-id').innerText = data.certificateId;
+        }
+        document.getElementById('player-credential-box').style.display = 'block';
+        document.getElementById('btn-claim-credential').style.display = 'none';
+        
+        // Reload dashboard stats
+        loadData();
+      } catch (err) {
+        document.getElementById('player-credential-box').style.display = 'block';
+      }
+    }
+
+    // Onboarding Form Logic (Scope A)
+    function updateOnboardBenchmarks() {
+      const div = document.getElementById('onboard-division').value;
+      const cadre = document.getElementById('onboard-cadre').value;
+      const desig = document.getElementById('onboard-designation').value;
+      
+      const focusMap = {
+        'DIID': 'Data Processing, Dissemination & DPI Modernization',
+        'SDRD': 'Sampling Frame Formulation & Multi-Stage Schedules',
+        'FOD': 'CAPI Field Enumeration & Primary Household Listing',
+        'NAD': 'Macroeconomic Aggregates, GVA & Supply-Use Tables',
+        'ESD': 'Price Indices (CPI/WPI) & Annual Survey of Industries',
+        'SSD': 'SDG Indicators, Gender Statistics & Environmental Accounts'
+      };
+
+      document.getElementById('onboard-focus').value = focusMap[div] || 'Official Statistics Execution';
+      document.getElementById('lbl-onboard-benchmark').innerText = `${div} Benchmark Level 4.0`;
+      document.getElementById('lbl-onboard-desig').innerText = desig;
+      document.getElementById('lbl-onboard-div').innerText = div;
+    }
+
+    async function handleOnboardingSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('onboard-name').value;
+      const cadre = document.getElementById('onboard-cadre').value;
+      const designation = document.getElementById('onboard-designation').value;
+      const division = document.getElementById('onboard-division').value;
+      const qualification = document.getElementById('onboard-qualification').value;
+
+      try {
+        const res = await fetch('/api/users/profile/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: 'user-01', name, cadre, designation, division, qualification })
+        });
+        const data = await res.json();
+        alert(`✓ Profile successfully calibrated for ${name} (${designation} · ${division})!\nTarget benchmarks synthesized.`);
+        window.location.hash = '#dashboard';
+        loadData();
+      } catch (err) {
+        window.location.hash = '#dashboard';
+      }
+    }
+
+    // Real CSV Export Trigger for MoSPI ACBP
+    function downloadAdminCSV() {
+      const csvContent = "data:text/csv;charset=utf-8," 
+        + "Division,Statistical (10),Technical (12),Governance (5),Behavioural (6),Readiness Index,Status\n"
+        + "National Accounts Division (NAD),4.2,3.5,3.8,3.9,86%,Role Benchmark Met\n"
+        + "Survey Design & Research Division (SDRD),4.5,3.8,3.2,3.6,88%,Role Benchmark Met\n"
+        + "Field Operations Division (FOD),3.2,2.8,3.4,3.2,68%,Critical Upskilling Required\n"
+        + "Data Informatics & Innovation Division (DIID),3.7,4.6,4.2,3.8,91%,Center of Excellence\n"
+        + "Social Statistics Division (SSD),3.6,3.4,3.7,3.8,78%,Moderate Gap\n";
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "MoSPI_Institutional_Capacity_ACBP_2026.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Accessibility Text-to-Speech (GIGW 3.0 Compliance)
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const clean = text.replace(/[*#$_]/g, '');
+        const utterance = new SpeechSynthesisUtterance(clean);
+        utterance.lang = currentLanguage === 'hi' ? 'hi-IN' : 'en-IN';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Speech synthesis not supported in this browser.');
       }
     }
 
