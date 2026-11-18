@@ -3,11 +3,6 @@
   "framework": null,
   "buildCommand": null,
   "outputDirectory": "public",
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "dev.db"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",

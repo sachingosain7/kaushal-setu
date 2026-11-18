@@ -10,12 +10,19 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 
+const os = require('node:os');
 const PORT = process.env.PORT || 3000;
 let DB_PATH = path.resolve(process.cwd(), 'dev.db');
 
 // If running in Vercel / AWS Lambda environment where filesystem is read-only except /tmp
 if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
-  const tmpDbPath = path.join('/tmp', 'dev.db');
+  const tmpDir = process.env.TMPDIR || (process.platform === 'win32' ? os.tmpdir() : '/tmp');
+  try {
+    if (!fs.existsSync(tmpDir)) {
+      fs.mkdirSync(tmpDir, { recursive: true });
+    }
+  } catch (e) {}
+  const tmpDbPath = path.join(tmpDir, 'dev.db');
   if (!fs.existsSync(tmpDbPath)) {
     if (fs.existsSync(DB_PATH)) {
       try {
