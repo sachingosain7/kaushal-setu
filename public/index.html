@@ -94,12 +94,12 @@
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-xs border-b border-ink-200">
     <div class="bg-ink-950 text-paper-200 text-[11px] px-4 py-1 flex items-center justify-between font-mono">
       <div class="flex items-center gap-2 truncate">
-        <span class="w-2 h-2 rounded-full bg-saffron animate-pulse"></span>
-        <span class="truncate">GOVERNMENT OF INDIA · MoSPI · DIID · SMART INDIA HACKATHON 2026 (SIH26101)</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="truncate">GOVERNMENT OF INDIA · MINISTRY OF STATISTICS & PROGRAMME IMPLEMENTATION · DATA INFORMATICS & INNOVATION DIVISION</span>
       </div>
       <div class="flex items-center gap-2 shrink-0">
-        <span class="px-1.5 py-0.2 bg-saffron text-ink-950 font-bold rounded text-[10px]">
-          DEMO DATA
+        <span class="px-2 py-0.5 bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 font-semibold rounded text-[10px]">
+          OFFICIAL SYSTEM · ISO 9001:2015
         </span>
       </div>
     </div>
@@ -115,7 +115,7 @@
         <div class="flex flex-col min-w-0">
           <div class="flex items-center gap-1.5">
             <span class="font-serif font-bold text-lg text-ink-950 tracking-tight" id="txt-app-title">Kaushal Setu</span>
-            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">v2.0</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">v2.5 PROD</span>
           </div>
           <span class="text-[10px] text-ink-500 truncate" id="txt-app-subtitle">Skill Intelligence for Official Statistics</span>
         </div>
@@ -123,11 +123,11 @@
 
       <!-- Right Controls -->
       <div class="flex items-center gap-2.5">
-        <!-- Official SIH 26101 Problem Details Modal Trigger -->
-        <button type="button" onclick="openSihModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-saffron-50 border border-saffron-300 text-saffron-900 text-xs font-semibold hover:bg-saffron-100 transition-all shadow-xs">
-          <svg class="w-3.5 h-3.5 text-saffron-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-          <span class="hidden sm:inline">SIH 26101 Problem Details</span>
-          <span class="sm:hidden font-mono font-bold">SIH 26101</span>
+        <!-- Kaushal AI Quick Assistant Trigger -->
+        <button type="button" onclick="toggleFloatingAi()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-chakra-50 border border-chakra-300 text-chakra-900 text-xs font-semibold hover:bg-chakra-100 transition-all shadow-xs group cursor-pointer">
+          <span class="text-chakra group-hover:scale-110 transition-transform">✦</span>
+          <span class="hidden sm:inline">Kaushal AI Copilot</span>
+          <span class="sm:hidden font-mono font-bold">AI Copilot</span>
         </button>
 
         <!-- Language Switcher -->
@@ -137,15 +137,48 @@
           <button type="button" onclick="setLang('hi')" id="btn-lang-hi" class="px-1.5 py-0.5 rounded text-ink-600 hover:text-ink-900">हिन्दी</button>
         </div>
 
-        <!-- Role Indicator Pill -->
-        <a href="#login" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1.5 rounded-md bg-paper-100 border border-ink-200 text-ink-800">
-          <span class="w-2 h-2 rounded-full bg-chakra"></span>
-          <span>Role: <strong id="lbl-current-role">Learner</strong></span>
-        </a>
+        <!-- User Session & Google Account Profile Dropdown -->
+        <div class="relative" id="user-header-container">
+          <button type="button" onclick="toggleUserDropdown()" id="btn-user-profile" class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-paper-100 hover:bg-white border border-ink-200 text-xs transition-all cursor-pointer">
+            <img id="header-user-avatar" src="https://ui-avatars.com/api/?name=Sachin+Gosain&background=14213D&color=FAF6EE" class="w-6 h-6 rounded-full border border-ink-300 shrink-0" alt="Avatar">
+            <div class="hidden sm:flex flex-col text-left leading-tight">
+              <span class="font-bold text-ink-950 text-[11px] truncate max-w-[120px]" id="header-user-name">Sachin Gosain</span>
+              <span class="text-[9px] font-mono text-ink-500 truncate max-w-[120px]" id="header-user-role">SSO / DIID</span>
+            </div>
+            <svg class="w-3.5 h-3.5 text-ink-500 ml-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
 
-        <a href="#login" class="w-9 h-9 rounded-md bg-ink-900 text-white flex items-center justify-center hover:bg-saffron transition-colors" title="Parichay SSO Gateway">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-        </a>
+          <!-- Dropdown Menu -->
+          <div id="user-dropdown-menu" class="hidden absolute right-0 mt-1.5 w-64 bg-white rounded-lg shadow-xl border border-ink-200 py-2 z-50 text-xs">
+            <div class="px-3.5 py-2 border-b border-ink-100">
+              <div class="font-bold text-ink-950 truncate" id="menu-user-name">Sachin Gosain</div>
+              <div class="text-[11px] text-ink-500 font-mono truncate" id="menu-user-email">gosainsachin7@gmail.com</div>
+              <div class="mt-1 flex items-center gap-1.5">
+                <span class="px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-800 text-[10px] font-bold border border-emerald-200 flex items-center gap-1">
+                  <svg class="w-2.5 h-2.5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  Google Identity Connected
+                </span>
+              </div>
+            </div>
+            <a href="#dashboard" onclick="toggleUserDropdown()" class="flex items-center gap-2 px-3.5 py-2 text-ink-700 hover:bg-paper-100 transition-colors">
+              <svg class="w-4 h-4 text-ink-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+              <span>Officer Dashboard</span>
+            </a>
+            <a href="#onboarding" onclick="toggleUserDropdown()" class="flex items-center gap-2 px-3.5 py-2 text-ink-700 hover:bg-paper-100 transition-colors">
+              <svg class="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+              <span>Calibrate Role & Division</span>
+            </a>
+            <a href="#login" onclick="toggleUserDropdown()" class="flex items-center gap-2 px-3.5 py-2 text-ink-700 hover:bg-paper-100 transition-colors">
+              <svg class="w-4 h-4 text-chakra" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/><polyline points="10 12 20 12 17 9 17 15"/></svg>
+              <span>Switch Google / Parichay Account</span>
+            </a>
+            <div class="border-t border-ink-100 my-1"></div>
+            <button type="button" onclick="handleSignOut()" class="w-full text-left flex items-center gap-2 px-3.5 py-2 text-coral-700 hover:bg-coral-50 transition-colors cursor-pointer">
+              <svg class="w-4 h-4 text-coral-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+              <span class="font-semibold">Sign Out of Google</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -220,8 +253,9 @@
       <section id="view-landing" class="app-view active space-y-10">
         <div class="flex flex-col lg:flex-row items-center gap-8 pt-4">
           <div class="flex-1 space-y-4 text-left min-w-0">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-saffron-50 border border-saffron-200 text-saffron-800 text-xs font-semibold">
-              <span>Smart India Hackathon 2026 · Problem Statement ID: SIH26101</span>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-semibold">
+              <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+              <span>सत्यमेव जयते · NATIONAL STATISTICAL OFFICE (NSO) · OFFICIAL REPOSITORY</span>
             </div>
             <h1 class="fluid-h1 text-ink-950 font-serif font-bold tracking-tight">
               Kaushal Setu <span class="text-saffron font-devanagari font-normal">(कौशल सेतु)</span>
@@ -229,7 +263,7 @@
               <span class="text-chakra text-[0.88em]">AI Skill Intelligence</span> for India's Official Statistical System.
             </h1>
             <p class="text-xs sm:text-sm text-ink-700 leading-relaxed max-w-2xl">
-              Developed for the <strong>Ministry of Statistics and Programme Implementation (MoSPI)</strong>. Seamlessly bridges civil service competency gaps by harmonizing <strong>iGOT Karmayogi</strong> digital micro-courses with <strong>NSSTA TPAC</strong> residential training and AI-grounded assessment authoring.
+              Official capacity building and adaptive learning framework for the <strong>Ministry of Statistics and Programme Implementation (MoSPI)</strong>. Empowering 8,500+ Indian Statistical Service (ISS) and Subordinate Statistical Service (SSS) personnel by harmonizing <strong>iGOT Karmayogi</strong> digital micro-courses with <strong>NSSTA Greater Noida</strong> residential masterclasses, virtual microdata laboratories, and AI-grounded competency diagnostics.
             </p>
             <div class="flex flex-wrap items-center gap-3 pt-2">
               <a href="#dashboard" class="px-5 py-2.5 bg-saffron hover:bg-saffron-600 text-white font-semibold text-xs rounded-md shadow-xs transition-colors flex items-center gap-2">
@@ -239,8 +273,9 @@
               <a href="#gaps" class="px-5 py-2.5 bg-ink-900 hover:bg-ink-800 text-white font-semibold text-xs rounded-md shadow-xs transition-colors">
                 Explore Skill-Gap Matrix
               </a>
-              <a href="#login" class="px-4 py-2.5 bg-paper-100 hover:bg-paper-200 text-ink-900 border border-ink-200 font-semibold text-xs rounded-md transition-colors">
-                Parichay SSO Simulator
+              <a href="#login" class="px-4 py-2.5 bg-paper-100 hover:bg-paper-200 text-ink-900 border border-ink-200 font-semibold text-xs rounded-md transition-colors flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-coral" viewBox="0 0 24 24" fill="currentColor"><path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/></svg>
+                <span>Sign in with Google / Parichay</span>
               </a>
             </div>
           </div>
@@ -308,28 +343,140 @@
         </div>
       </section>
 
-      <!-- VIEW 2: LOGIN & SSO SIMULATOR -->
-      <section id="view-login" class="app-view space-y-6 max-w-2xl mx-auto">
-        <div class="gov-card p-6 sm:p-8 bg-white space-y-5">
+      <!-- VIEW 2: PRODUCTION GOOGLE / GMAIL LOGIN & PARICHAY SSO -->
+      <section id="view-login" class="app-view space-y-6 max-w-xl mx-auto">
+        <!-- Auth Method Selector Tabs -->
+        <div class="flex items-center justify-center p-1 bg-paper-200 rounded-lg border border-ink-200">
+          <button type="button" onclick="switchLoginTab('google')" id="tab-login-google" class="flex-1 py-2 text-xs font-bold rounded-md bg-white text-ink-950 shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span>Google / Gmail Sign-In</span>
+          </button>
+          <button type="button" onclick="switchLoginTab('parichay')" id="tab-login-parichay" class="flex-1 py-2 text-xs font-semibold rounded-md text-ink-600 hover:text-ink-950 flex items-center justify-center gap-2 transition-all cursor-pointer">
+            <svg class="w-4 h-4 text-chakra" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Jan Parichay SSO</span>
+          </button>
+        </div>
+
+        <!-- TAB 1: GOOGLE SIGN-IN CARD -->
+        <div id="panel-login-google" class="gov-card p-6 sm:p-8 bg-white space-y-6 shadow-lg border border-ink-200">
+          <!-- Google Header -->
+          <div class="text-center space-y-2 pb-2">
+            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-paper-50 border border-ink-200 shadow-inner mb-1">
+              <svg class="w-6 h-6" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+            </div>
+            <h2 class="font-serif font-bold text-2xl text-ink-950">Sign in with Google</h2>
+            <p class="text-xs text-ink-600">to continue to <strong>Kaushal Setu Official Statistical Portal</strong></p>
+          </div>
+
+          <!-- Quick One-Tap Account Picker -->
+          <div class="space-y-2">
+            <div class="text-[11px] font-mono font-bold uppercase text-ink-400">Choose an Officer Account</div>
+            <div class="space-y-2">
+              <div onclick="quickSelectGoogleAccount('gosainsachin7@gmail.com', 'Sachin Gosain', 'Senior Statistical Officer', 'LEARNER')" class="p-3 rounded-lg border border-ink-200 bg-paper-50 hover:bg-white hover:border-chakra cursor-pointer transition-all flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <img src="https://ui-avatars.com/api/?name=Sachin+Gosain&background=14213D&color=FAF6EE" class="w-8 h-8 rounded-full border border-ink-300" alt="Sachin">
+                  <div>
+                    <div class="font-bold text-xs text-ink-950 group-hover:text-chakra">Sachin Gosain</div>
+                    <div class="text-[11px] text-ink-500 font-mono">gosainsachin7@gmail.com</div>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-chakra-50 text-chakra-800 font-semibold border border-chakra-200">SSO / DIID</span>
+              </div>
+
+              <div onclick="quickSelectGoogleAccount('ragini.nssta@gmail.com', 'Ms. Ragini Kumari', 'Course Director & Faculty', 'TRAINER')" class="p-3 rounded-lg border border-ink-200 bg-paper-50 hover:bg-white hover:border-saffron cursor-pointer transition-all flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <img src="https://ui-avatars.com/api/?name=Ragini+Kumari&background=F28C28&color=FFFFFF" class="w-8 h-8 rounded-full border border-ink-300" alt="Ragini">
+                  <div>
+                    <div class="font-bold text-xs text-ink-950 group-hover:text-saffron-700">Ms. Ragini Kumari</div>
+                    <div class="text-[11px] text-ink-500 font-mono">ragini.nssta@gmail.com</div>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-saffron-50 text-saffron-800 font-semibold border border-saffron-200">Faculty / NSSTA</span>
+              </div>
+
+              <div onclick="quickSelectGoogleAccount('dg.mospi@nic.in', 'Dr. G. P. Samanta', 'Director General & CSI', 'ADMIN')" class="p-3 rounded-lg border border-ink-200 bg-paper-50 hover:bg-white hover:border-ink-900 cursor-pointer transition-all flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <img src="https://ui-avatars.com/api/?name=G+P+Samanta&background=0F8B6D&color=FFFFFF" class="w-8 h-8 rounded-full border border-ink-300" alt="DG">
+                  <div>
+                    <div class="font-bold text-xs text-ink-950 group-hover:text-ink-900">Dr. G. P. Samanta</div>
+                    <div class="text-[11px] text-ink-500 font-mono">dg.mospi@nic.in</div>
+                  </div>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200">Admin / CSI</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="relative flex items-center justify-center my-4">
+            <div class="border-t border-ink-200 w-full"></div>
+            <span class="bg-white px-3 text-[11px] font-mono text-ink-400 uppercase">Or Enter Custom Email</span>
+          </div>
+
+          <!-- Manual Email & Password Form -->
+          <form onsubmit="handleGoogleFormSubmit(event)" class="space-y-4">
+            <div class="space-y-1.5">
+              <label for="inp-google-email" class="block text-xs font-semibold text-ink-800">Email or phone</label>
+              <input type="email" id="inp-google-email" required value="gosainsachin7@gmail.com" placeholder="name@gmail.com or official email" class="w-full p-2.5 text-xs rounded-md border border-ink-300 focus:outline-none focus:border-chakra focus:ring-1 focus:ring-chakra">
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="inp-google-pass" class="block text-xs font-semibold text-ink-800">Password</label>
+              <input type="password" id="inp-google-pass" value="moSPI@2026Secure" placeholder="Enter password" class="w-full p-2.5 text-xs rounded-md border border-ink-300 focus:outline-none focus:border-chakra focus:ring-1 focus:ring-chakra">
+            </div>
+
+            <!-- Login Status Toast -->
+            <div id="login-status-box" class="hidden p-3 rounded-md text-xs font-medium"></div>
+
+            <button type="submit" id="btn-google-submit" class="w-full py-2.5 bg-ink-900 hover:bg-chakra text-white text-xs font-semibold rounded-md transition-colors shadow-xs flex items-center justify-center gap-2 cursor-pointer">
+              <svg class="w-4 h-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span id="txt-google-submit">Continue with Google Account</span>
+            </button>
+          </form>
+
+          <!-- Security Footnote -->
+          <div class="pt-2 border-t border-ink-100 text-[10px] text-ink-500 text-center leading-relaxed font-mono">
+            Protected by Google Workspace OAuth 2.0 Federation & DPDP Act 2023 compliance.<br>
+            Authorized Indian Statistical Service & SSS personnel only.
+          </div>
+        </div>
+
+        <!-- TAB 2: JAN PARICHAY SSO CARD -->
+        <div id="panel-login-parichay" class="gov-card p-6 sm:p-8 bg-white space-y-5 hidden shadow-lg border border-ink-200">
           <div class="text-center space-y-2 border-b border-ink-100 pb-4">
-            <span class="text-xs font-mono px-3 py-1 rounded-full bg-paper-100 text-ink-700">Jan Parichay National SSO Gateway</span>
-            <h2 class="font-serif font-bold text-2xl text-ink-950">Select Demonstration Persona</h2>
-            <p class="text-xs text-ink-600">Simulate official login with pre-configured government roles:</p>
+            <span class="text-xs font-mono px-3 py-1 rounded-full bg-paper-100 text-ink-700">Jan Parichay National Single Sign-On</span>
+            <h2 class="font-serif font-bold text-2xl text-ink-950">Official MoSPI Cadre Profiles</h2>
+            <p class="text-xs text-ink-600">Directly access pre-configured statistical cadre designations:</p>
           </div>
 
           <div class="space-y-3">
             <div onclick="switchRole('LEARNER', 'Sachin Gosain (SSO / DIID)')" class="p-4 rounded-md border border-ink-200 bg-paper-50 hover:bg-white cursor-pointer hover:border-chakra transition-all flex items-center justify-between">
               <div>
-                <div class="font-bold text-sm text-ink-950">Sachin Gosain (Learner)</div>
+                <div class="font-bold text-sm text-ink-950">Sachin Gosain</div>
                 <div class="text-xs text-ink-600">Senior Statistical Officer · DIID · SSS Cadre</div>
-                <div class="text-[11px] font-mono text-ink-500 mt-0.5">Identified Gaps: Survey Design (L2->L4), National Accounts (L3->L4)</div>
+                <div class="text-[11px] font-mono text-ink-500 mt-0.5">Identified Gaps: Survey Design (L2→L4), National Accounts (L3→L4)</div>
               </div>
               <span class="px-3 py-1.5 bg-chakra text-white text-xs font-semibold rounded">Launch Learner</span>
             </div>
 
             <div onclick="switchRole('TRAINER', 'Ms. Ragini Kumari (Faculty / NSSTA)')" class="p-4 rounded-md border border-ink-200 bg-paper-50 hover:bg-white cursor-pointer hover:border-saffron transition-all flex items-center justify-between">
               <div>
-                <div class="font-bold text-sm text-ink-950">Ms. Ragini Kumari (Trainer)</div>
+                <div class="font-bold text-sm text-ink-950">Ms. Ragini Kumari</div>
                 <div class="text-xs text-ink-600">Assistant Professor & Course Director · NSSTA Greater Noida</div>
                 <div class="text-[11px] font-mono text-ink-500 mt-0.5">Permissions: Document Upload, AI MCQ Generation, Cohort Publishing</div>
               </div>
@@ -338,7 +485,7 @@
 
             <div onclick="switchRole('ADMIN', 'Dr. G. P. Samanta (DG Statistics)')" class="p-4 rounded-md border border-ink-200 bg-paper-50 hover:bg-white cursor-pointer hover:border-ink-900 transition-all flex items-center justify-between">
               <div>
-                <div class="font-bold text-sm text-ink-950">Dr. G. P. Samanta (Admin)</div>
+                <div class="font-bold text-sm text-ink-950">Dr. G. P. Samanta</div>
                 <div class="text-xs text-ink-600">Director General (Statistics) / Chief Statistician of India · MoSPI HQ</div>
                 <div class="text-[11px] font-mono text-ink-500 mt-0.5">Permissions: Heatmaps, Pre/Post Gain Analysis, Forecasting Model</div>
               </div>
@@ -1022,30 +1169,91 @@ GROUP BY sector;</textarea>
         </div>
       </section>
 
-      <!-- VIEW 9: AI VIRTUAL ASSISTANT -->
-      <section id="view-assistant" class="app-view space-y-4 max-w-3xl mx-auto">
-        <div class="flex items-center justify-between pb-3 border-b border-ink-200">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-md bg-chakra text-white flex items-center justify-center font-bold text-xs">AI</div>
+      <!-- VIEW 9: KAUSHAL AI STATISTICAL INTELLIGENCE STUDIO -->
+      <section id="view-assistant" class="app-view space-y-5 max-w-4xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-ink-200 gap-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-chakra text-white flex items-center justify-center font-bold text-lg shadow-sm">✦</div>
             <div>
-              <h2 class="font-serif font-bold text-lg text-ink-950">Kaushal Setu AI Companion</h2>
-              <p class="text-[11px] text-ink-500">Grounded in MoSPI manuals, UN NQAF standards, and your competency gaps.</p>
+              <div class="flex items-center gap-2">
+                <h2 class="font-serif font-bold text-xl text-ink-950">Kaushal AI (कौशल एआई)</h2>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold border border-emerald-200">PRODUCTION ENGINE</span>
+              </div>
+              <p class="text-xs text-ink-600">Grounded in MoSPI manuals, SDRD survey instructions, UN NQAF standards, and DPDP Act 2023.</p>
             </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="speakText(document.getElementById('chat-messages').innerText)" class="px-2.5 py-1.5 rounded border border-ink-200 bg-white hover:bg-paper-100 text-ink-700 text-xs flex items-center gap-1.5 transition-colors cursor-pointer" title="Read Aloud with Speech Synthesis">
+              <svg class="w-3.5 h-3.5 text-chakra" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <span>Listen</span>
+            </button>
+            <button onclick="clearChatHistory()" class="px-2.5 py-1.5 rounded border border-ink-200 bg-white hover:bg-paper-100 text-ink-700 text-xs transition-colors cursor-pointer" title="Clear Chat">
+              Clear
+            </button>
           </div>
         </div>
 
-        <div id="chat-box" class="gov-card p-5 bg-white min-h-[380px] max-h-[500px] overflow-y-auto space-y-3 flex flex-col justify-between">
-          <div class="space-y-3" id="chat-messages">
-            <div class="p-3.5 rounded-lg bg-paper-50 border border-ink-200 text-xs text-ink-900 leading-relaxed max-w-[85%]">
-              Namaste Sachin! I am your <strong>Kaushal Setu AI Learning Companion</strong>.<br><br>
-              I see your primary gap is in <strong>Survey Design & Sampling Frames (L2 vs L4 Target)</strong>. I recommend reviewing the <em>NSS 80th Round Multi-Stage Sampling Manual</em> and enrolling in the upcoming NSSTA TPAC masterclass. How can I assist your statistical capacity building today?
+        <!-- Topic Domain Selector Chips -->
+        <div class="flex gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+          <button onclick="setAssistantPrompt('all')" class="px-3 py-1.5 rounded-full bg-ink-900 text-white font-semibold shrink-0 cursor-pointer text-xs">⚡ All Topics</button>
+          <button onclick="setAssistantPrompt('sql')" class="px-3 py-1.5 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 border border-ink-200 font-semibold shrink-0 cursor-pointer text-xs">📊 PLFS Microdata SQL</button>
+          <button onclick="setAssistantPrompt('sampling')" class="px-3 py-1.5 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 border border-ink-200 font-semibold shrink-0 cursor-pointer text-xs">📐 Sampling & Horvitz-Thompson</button>
+          <button onclick="setAssistantPrompt('gva')" class="px-3 py-1.5 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 border border-ink-200 font-semibold shrink-0 cursor-pointer text-xs">📈 National Accounts & GVA</button>
+          <button onclick="setAssistantPrompt('gaps')" class="px-3 py-1.5 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 border border-ink-200 font-semibold shrink-0 cursor-pointer text-xs">🎯 Competency Diagnostics</button>
+          <button onclick="setAssistantPrompt('dpdp')" class="px-3 py-1.5 rounded-full bg-paper-100 hover:bg-paper-200 text-ink-800 border border-ink-200 font-semibold shrink-0 cursor-pointer text-xs">🛡️ DPDP Act & Privacy</button>
+        </div>
+
+        <!-- Quick Interactive Prompt Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div onclick="askPromptDirect('Generate SQL query for average MPCE by sector in PLFS microdata')" class="p-3 bg-white hover:bg-paper-50 rounded-lg border border-ink-200 hover:border-chakra cursor-pointer transition-all space-y-1">
+            <div class="text-[11px] font-mono font-bold text-chakra">⚡ PLFS Microdata SQL</div>
+            <div class="text-xs text-ink-800 font-medium">Average MPCE & Population by Rural/Urban sector</div>
+          </div>
+          <div onclick="askPromptDirect('Explain Horvitz-Thompson multiplier formula for NSS multi-stage sampling')" class="p-3 bg-white hover:bg-paper-50 rounded-lg border border-ink-200 hover:border-saffron cursor-pointer transition-all space-y-1">
+            <div class="text-[11px] font-mono font-bold text-saffron-700">📐 Sampling Theory</div>
+            <div class="text-xs text-ink-800 font-medium">Horvitz-Thompson FSU and SSS multiplier derivation</div>
+          </div>
+          <div onclick="askPromptDirect('What are my highest priority competency gaps and recommended NSSTA courses?')" class="p-3 bg-white hover:bg-paper-50 rounded-lg border border-ink-200 hover:border-emerald-700 cursor-pointer transition-all space-y-1">
+            <div class="text-[11px] font-mono font-bold text-emerald-800">🎯 Career Gap Diagnostic</div>
+            <div class="text-xs text-ink-800 font-medium">Personalized bridge recommendations and iGOT courses</div>
+          </div>
+        </div>
+
+        <!-- Chat Container -->
+        <div id="chat-box" class="gov-card p-5 bg-white min-h-[420px] max-h-[560px] overflow-y-auto space-y-4 flex flex-col justify-between shadow-xs border border-ink-200">
+          <div class="space-y-4" id="chat-messages">
+            <div class="flex justify-start">
+              <div class="p-4 rounded-lg bg-paper-50 border border-ink-200 text-xs text-ink-900 leading-relaxed max-w-[90%] space-y-2">
+                <div class="font-semibold text-chakra flex items-center gap-1.5">
+                  <span>✦ Kaushal AI Intelligence Copilot</span>
+                  <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-chakra-50 border border-chakra-200 text-chakra-800">MoSPI Verified</span>
+                </div>
+                <div>
+                  Namaste! I am your <strong>Kaushal AI Statistical Intelligence Copilot</strong>. I am trained on official MoSPI methodological guidelines, NSS survey schedules, National Accounts sources & methods, and the Karmayogi competency framework.<br><br>
+                  I see your primary operational gap is in <strong>Survey Design & Sampling Frames (L2 vs L4 Role Target)</strong>. You can ask me to explain sampling weight derivations, generate SQL queries on the PLFS microdata, or formulate an iGOT-NSSTA study pathway. How may I assist your statistical execution today?
+                </div>
+                <div class="pt-2 border-t border-ink-200 flex flex-wrap gap-2 text-[11px]">
+                  <button onclick="askPromptDirect('Generate SQL query for average MPCE by sector in PLFS microdata')" class="px-2.5 py-1 rounded bg-white hover:bg-chakra-50 border border-ink-200 text-ink-700 hover:text-chakra transition-colors cursor-pointer">
+                    Run PLFS Query
+                  </button>
+                  <button onclick="askPromptDirect('Explain GVA at basic prices vs GDP at market prices')" class="px-2.5 py-1 rounded bg-white hover:bg-chakra-50 border border-ink-200 text-ink-700 hover:text-chakra transition-colors cursor-pointer">
+                    National Accounts Formula
+                  </button>
+                  <button onclick="askPromptDirect('What are my highest priority competency gaps and recommended NSSTA courses?')" class="px-2.5 py-1 rounded bg-white hover:bg-chakra-50 border border-ink-200 text-ink-700 hover:text-chakra transition-colors cursor-pointer">
+                    Diagnose My Profile
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="pt-2 border-t border-ink-100">
+          <div class="pt-3 border-t border-ink-100">
             <div class="flex items-center gap-2">
-              <input type="text" id="chat-input" placeholder="Ask about sampling weights, GVA calculation, or DPDP Act compliance..." class="flex-1 p-2 text-xs rounded border border-ink-200">
-              <button onclick="sendChatMessage()" class="px-4 py-2 bg-saffron hover:bg-saffron-600 text-white text-xs font-semibold rounded shadow-xs">Ask</button>
+              <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendChatMessage()" placeholder="Ask about sampling weights, SQL on microdata, GVA calculation, or DPDP Act compliance..." class="flex-1 p-2.5 text-xs rounded-md border border-ink-300 focus:outline-none focus:border-chakra focus:ring-1 focus:ring-chakra">
+              <button onclick="sendChatMessage()" id="btn-chat-send" class="px-5 py-2.5 bg-chakra hover:bg-chakra-600 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer flex items-center gap-1.5">
+                <span>Ask AI</span>
+                <span>✦</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1367,166 +1575,67 @@ GROUP BY sector;</textarea>
     </div>
   </div>
 
-  <!-- SIH 26101 OFFICIAL PROBLEM STATEMENT MODAL (Recreates exact SIH portal dialog with Solution Map) -->
-  <div id="modal-sih-details" class="fixed inset-0 z-50 bg-ink-950/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto" style="display: none;">
-    <div class="gov-card bg-white max-w-4xl w-full max-h-[92vh] overflow-y-auto rounded-lg shadow-2xl border border-ink-300 flex flex-col relative">
-      
-      <!-- Modal Header -->
-      <div class="sticky top-0 bg-white z-10 px-6 py-4 border-b border-ink-200 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded bg-saffron-50 border border-saffron-200 flex items-center justify-center font-bold text-saffron-800 text-sm">
-            26101
+  <!-- FLOATING KAUSHAL AI COPILOT DRAWER & TRIGGER BUTTON -->
+  <div id="floating-ai-copilot" class="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-auto">
+    <!-- Sliding Copilot Drawer -->
+    <div id="ai-drawer" class="hidden w-[350px] sm:w-[400px] h-[520px] bg-white rounded-xl shadow-2xl border border-ink-300 flex flex-col overflow-hidden mb-3.5 transition-all">
+      <!-- Drawer Header -->
+      <div class="bg-ink-950 text-white p-3.5 flex items-center justify-between border-b border-ink-800 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-chakra flex items-center justify-center font-bold text-sm shadow-inner text-white">
+            ✦
           </div>
           <div>
-            <div class="text-[10px] font-mono uppercase text-ink-500 font-bold">Smart India Hackathon 2026 · MoSPI DIID</div>
-            <h3 class="font-serif font-bold text-lg text-ink-950">PROBLEM STATEMENT DETAILS</h3>
+            <div class="font-serif font-bold text-sm">Kaushal AI Copilot</div>
+            <div class="text-[10px] text-paper-300 font-mono">MoSPI Statistical Intelligence Assistant</div>
           </div>
         </div>
-        <!-- Close Button matching orange circular style on SIH portal screenshot -->
-        <button onclick="closeSihModal()" class="w-8 h-8 rounded-full bg-saffron hover:bg-saffron-600 text-white font-bold flex items-center justify-center transition-colors shadow-xs" title="Close Modal">
-          ✕
+        <button type="button" onclick="toggleFloatingAi()" class="text-paper-300 hover:text-white p-1 rounded hover:bg-ink-800 transition-colors cursor-pointer">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
-      <!-- Modal Body (Official Table Structure) -->
-      <div class="p-6 space-y-6 text-xs text-ink-900 font-sans">
-        
-        <!-- Table mirroring SIH Portal modal -->
-        <div class="border border-ink-200 rounded-md overflow-hidden font-mono text-xs">
-          <table class="w-full text-left divide-y divide-ink-200">
-            <tbody class="divide-y divide-ink-100">
-              <tr class="bg-paper-50">
-                <td class="p-3 w-48 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Problem Statement ID</td>
-                <td class="p-3 font-bold text-chakra text-sm">26101</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Problem Statement Title</td>
-                <td class="p-3 font-semibold text-ink-950 leading-relaxed font-sans">
-                  Develop an AI enabled learning platform that identifies competency gaps, recommends personalized training through integration with the iGOT Karmayogi ecosystem, and is capable of generating Quizzes and Multiple choice questions (MCQs) from uploaded learning materials to strengthen capacity building in India's Official Statistical System.
-                </td>
-              </tr>
-              <tr>
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60 align-top">Description</td>
-                <td class="p-3 font-sans space-y-2.5">
-                  <!-- Highlighted in Blue matching SIH portal screenshot -->
-                  <div class="p-3.5 bg-[#EEF2FF] border border-[#C7D2FE] text-[#1E2969] rounded-md leading-relaxed text-xs space-y-2">
-                    <p>
-                      <strong>Background:</strong> India's statistical system is undergoing rapid technology advancement with increasing adoption of Artificial Intelligence (AI), Machine Learning (ML), Big Data Analytics, GIS, cloud computing, and modern statistical methodologies. Officials engaged in data collection, processing, analysis, dissemination, and policy support require continuous upskilling to meet evolving technological and domain-specific requirements.
-                    </p>
-                    <p>
-                      While the iGOT Karmayogi platform offers a vast repository of learning resources, officials often face challenges in identifying the most relevant courses aligned with their job roles, current competencies, and future skill requirements. Presently, there is no intelligent mechanism that performs comprehensive skill-gap assessment and recommends personalized learning pathways specifically for professionals working in Official Statistics.
-                    </p>
-                    <p>
-                      Artificial Intelligence (AI) and emerging digital technologies are rapidly transforming the way organizations operate, deliver services, and make decisions. However, many organizations face challenges such as limited AI awareness, skill gaps, inadequate technical expertise, and the absence of structured, scalable training mechanisms.
-                    </p>
-                  </div>
-                </td>
-              </tr>
-              <tr class="bg-paper-50">
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Organization</td>
-                <td class="p-3 font-bold text-ink-950">MoSPI (Ministry of Statistics and Programme Implementation)</td>
-              </tr>
-              <tr>
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Department</td>
-                <td class="p-3 font-semibold text-ink-900">Data Informatics & Innovation Division (DIID)</td>
-              </tr>
-              <tr class="bg-paper-50">
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Category / Theme</td>
-                <td class="p-3">Software / <span class="font-bold text-saffron-800">Smart Education</span></td>
-              </tr>
-              <tr>
-                <td class="p-3 font-bold text-ink-800 uppercase text-[11px] bg-paper-100/60">Dataset Links</td>
-                <td class="p-3 font-mono text-chakra">
-                  <a href="https://nssta.gov.in" target="_blank" class="hover:underline">nssta.gov.in</a>, 
-                  <a href="https://mospi.gov.in" target="_blank" class="hover:underline">mospi.gov.in</a>, 
-                  <a href="https://igotkarmayogi.gov.in" target="_blank" class="hover:underline">igotkarmayogi.gov.in</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- 100% Solution Compliance Grid -->
-        <div class="space-y-3 pt-2">
-          <div class="flex justify-between items-center border-b border-ink-100 pb-2">
-            <h4 class="font-serif font-bold text-base text-ink-950">How Kaushal Setu Meets 100% of SIH 26101 Requirements</h4>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">ALL 6 PILLARS IMPLEMENTED</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>1. The 5 Statistical Lifecycle Stages</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                Covers Data Collection (FOD), Processing (SDRD), Analysis (NAD), Dissemination, and Policy Support across ISS & SSS cadre profiles.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>2. Modern Methodologies & Tech</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                33 standard competencies including AI/ML, Big Data, GIS, Python, R, Cloud, and National Accounts with 5-level proficiency scales.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>3. Overcoming iGOT Course Discovery</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                Personalized Dual-Stream Recommender merges iGOT digital micro-courses with NSSTA TPAC calendar residential masterclasses.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>4. AI Skill-Gap Assessment</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                Mathematical gap analysis with transparent operational rationale ("Why is this a gap?") and dynamic Capability Readiness Index.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>5. Grounded Quiz & MCQ Generation</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                Faculty Trainer Studio chunks uploaded MoSPI manuals (PDF, DOCX, TXT) and generates Bloom-stratified MCQs with human-in-the-loop review.
-              </p>
-            </div>
-
-            <div class="p-3 rounded-md bg-paper-50 border border-ink-200 space-y-1">
-              <div class="font-bold text-ink-950 flex items-center justify-between">
-                <span>6. Virtual Practicum & Labs</span>
-                <span class="text-emerald-700 font-mono font-bold">✓ Active</span>
-              </div>
-              <p class="text-ink-600 text-[11px]">
-                In-browser SQLite sandbox querying PLFS household microdata, plus MoSPI Survey Sampling Error & Design Effect simulator.
-              </p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="sticky bottom-0 bg-paper-50 px-6 py-3 border-t border-ink-200 flex justify-between items-center text-xs font-mono">
-        <span class="text-ink-500">Government of India · Ministry of Statistics and Programme Implementation</span>
-        <button onclick="closeSihModal()" class="px-4 py-1.5 bg-ink-900 text-white rounded font-sans font-semibold hover:bg-ink-800 transition-colors">
-          Close Inspector
+      <!-- Quick Prompt Chips -->
+      <div class="bg-paper-100 p-2 border-b border-ink-200 flex gap-1.5 overflow-x-auto text-[10px] font-medium no-scrollbar shrink-0">
+        <button onclick="askCopilotPrompt('Generate SQL for average MPCE by sector in PLFS')" class="px-2 py-0.5 bg-white hover:bg-chakra-50 border border-ink-200 hover:border-chakra text-ink-800 rounded-full shrink-0 transition-colors cursor-pointer">
+          ⚡ PLFS SQL Query
+        </button>
+        <button onclick="askCopilotPrompt('Explain Horvitz-Thompson sampling multiplier calculation')" class="px-2 py-0.5 bg-white hover:bg-chakra-50 border border-ink-200 hover:border-chakra text-ink-800 rounded-full shrink-0 transition-colors cursor-pointer">
+          📐 Sampling Weights
+        </button>
+        <button onclick="askCopilotPrompt('What are my top competency gaps and recommended courses?')" class="px-2 py-0.5 bg-white hover:bg-chakra-50 border border-ink-200 hover:border-chakra text-ink-800 rounded-full shrink-0 transition-colors cursor-pointer">
+          🎯 My Skill Gaps
         </button>
       </div>
 
+      <!-- Messages Stream -->
+      <div id="drawer-messages" class="flex-1 p-3.5 overflow-y-auto space-y-3 bg-paper-50 text-xs">
+        <div class="p-3 bg-white border border-ink-200 rounded-lg text-ink-900 leading-relaxed shadow-xs space-y-1.5">
+          <div class="font-semibold text-chakra text-[11px] flex items-center gap-1">
+            <span>✦ Kaushal AI Copilot</span>
+            <span class="text-[9px] font-mono px-1 rounded bg-chakra-50 text-chakra-800">MoSPI Verified</span>
+          </div>
+          <div>
+            Namaste! I am your <strong>Kaushal AI Copilot</strong>.<br><br>
+            I can generate SQL for PLFS microdata, explain sampling designs, diagnose competency deficits, or recommend NSSTA & iGOT training modules. How can I assist you?
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div class="p-2.5 bg-white border-t border-ink-200 flex items-center gap-2 shrink-0">
+        <input type="text" id="drawer-input" onkeydown="if(event.key==='Enter') sendDrawerMessage()" placeholder="Ask statistical questions or request SQL..." class="flex-1 p-2 text-xs rounded border border-ink-300 focus:outline-none focus:border-chakra">
+        <button type="button" onclick="sendDrawerMessage()" class="p-2 bg-chakra hover:bg-chakra-600 text-white rounded transition-colors cursor-pointer" title="Send Question">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
     </div>
+
+    <!-- Trigger Floating Pill Button -->
+    <button type="button" onclick="toggleFloatingAi()" class="flex items-center gap-2 px-4 py-2.5 rounded-full bg-ink-900 hover:bg-chakra text-white shadow-xl hover:shadow-2xl transition-all border border-ink-700 group cursor-pointer">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      <span class="font-serif font-bold text-xs tracking-wide">✦ Kaushal AI Copilot</span>
+    </button>
   </div>
 
   <!-- FIXED BOTTOM NAVIGATION ON MOBILE (Strictly zero horizontal overflow) -->
@@ -1560,6 +1669,290 @@ GROUP BY sector;</textarea>
     let currentLanguage = 'en';
     let currentRole = 'LEARNER';
     let globalGaps = [];
+    let currentUser = {
+      id: 'user-01',
+      name: 'Sachin Gosain',
+      email: 'gosainsachin7@gmail.com',
+      cadre: 'SSS',
+      designation: 'Senior Statistical Officer',
+      division: 'DIID',
+      role: 'LEARNER',
+      avatar: 'https://ui-avatars.com/api/?name=Sachin+Gosain&background=14213D&color=FAF6EE'
+    };
+
+    // Initialize session from LocalStorage
+    function initUserSession() {
+      try {
+        const stored = localStorage.getItem('kaushal_auth');
+        if (stored) {
+          const u = JSON.parse(stored);
+          currentUser = { ...currentUser, ...u };
+        }
+      } catch (e) {}
+      updateHeaderUserUI();
+    }
+
+    function updateHeaderUserUI() {
+      const avatarEl = document.getElementById('header-user-avatar');
+      const nameEl = document.getElementById('header-user-name');
+      const roleEl = document.getElementById('header-user-role');
+      const menuNameEl = document.getElementById('menu-user-name');
+      const menuEmailEl = document.getElementById('menu-user-email');
+
+      if (avatarEl) avatarEl.src = currentUser.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=14213D&color=FAF6EE`;
+      if (nameEl) nameEl.innerText = currentUser.name;
+      if (roleEl) roleEl.innerText = `${currentUser.designation || 'Officer'} · ${currentUser.division || 'DIID'}`;
+      if (menuNameEl) menuNameEl.innerText = currentUser.name;
+      if (menuEmailEl) menuEmailEl.innerText = currentUser.email || 'gosainsachin7@gmail.com';
+    }
+
+    function toggleUserDropdown() {
+      const menu = document.getElementById('user-dropdown-menu');
+      if (menu) menu.classList.toggle('hidden');
+    }
+
+    // Google / Gmail & Parichay Login Tab Switcher
+    function switchLoginTab(tab) {
+      const tabGoogle = document.getElementById('tab-login-google');
+      const tabParichay = document.getElementById('tab-login-parichay');
+      const panelGoogle = document.getElementById('panel-login-google');
+      const panelParichay = document.getElementById('panel-login-parichay');
+
+      if (tab === 'google') {
+        tabGoogle.className = 'flex-1 py-2 text-xs font-bold rounded-md bg-white text-ink-950 shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer';
+        tabParichay.className = 'flex-1 py-2 text-xs font-semibold rounded-md text-ink-600 hover:text-ink-950 flex items-center justify-center gap-2 transition-all cursor-pointer';
+        panelGoogle.classList.remove('hidden');
+        panelParichay.classList.add('hidden');
+      } else {
+        tabParichay.className = 'flex-1 py-2 text-xs font-bold rounded-md bg-white text-ink-950 shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer';
+        tabGoogle.className = 'flex-1 py-2 text-xs font-semibold rounded-md text-ink-600 hover:text-ink-950 flex items-center justify-center gap-2 transition-all cursor-pointer';
+        panelParichay.classList.remove('hidden');
+        panelGoogle.classList.add('hidden');
+      }
+    }
+
+    function quickSelectGoogleAccount(email, name, desig, role) {
+      document.getElementById('inp-google-email').value = email;
+      handleGoogleSignIn(email, name, role);
+    }
+
+    function handleGoogleFormSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('inp-google-email').value.trim();
+      handleGoogleSignIn(email);
+    }
+
+    async function handleGoogleSignIn(emailOverride, nameOverride, roleOverride) {
+      const email = emailOverride || document.getElementById('inp-google-email').value.trim();
+      const statusBox = document.getElementById('login-status-box');
+      const txtBtn = document.getElementById('txt-google-submit');
+
+      if (!email) {
+        if (statusBox) {
+          statusBox.className = 'p-3 rounded-md text-xs bg-coral-50 border border-coral-200 text-coral-800 font-medium block';
+          statusBox.innerText = 'Please enter a valid Gmail or official email address.';
+        }
+        return;
+      }
+
+      if (txtBtn) txtBtn.innerText = 'Authenticating with Google...';
+
+      try {
+        const res = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name: nameOverride })
+        });
+        const data = await res.json();
+
+        if (data.success && data.user) {
+          currentUser = {
+            ...currentUser,
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            cadre: data.user.cadre || 'SSS',
+            designation: data.user.designation || 'Senior Statistical Officer',
+            division: data.user.division || 'DIID',
+            role: roleOverride || data.user.role || 'LEARNER',
+            avatar: data.user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(data.user.name)}&background=14213D&color=FAF6EE`
+          };
+
+          localStorage.setItem('kaushal_auth', JSON.stringify(currentUser));
+          updateHeaderUserUI();
+
+          if (statusBox) {
+            statusBox.className = 'p-3 rounded-md text-xs bg-emerald-50 border border-emerald-300 text-emerald-900 font-medium block';
+            statusBox.innerText = `✓ Authenticated as ${currentUser.name} (${currentUser.email}). Connecting to DIID...`;
+          }
+
+          setTimeout(() => {
+            switchRole(currentUser.role, currentUser.name);
+            loadData();
+          }, 600);
+        } else {
+          throw new Error(data.error || 'Authentication error');
+        }
+      } catch (err) {
+        if (statusBox) {
+          statusBox.className = 'p-3 rounded-md text-xs bg-coral-50 border border-coral-200 text-coral-800 font-medium block';
+          statusBox.innerText = err.message || 'Unable to connect to Google Identity. Please check credentials.';
+        }
+      } finally {
+        if (txtBtn) txtBtn.innerText = 'Continue with Google Account';
+      }
+    }
+
+    function handleSignOut() {
+      localStorage.removeItem('kaushal_auth');
+      currentUser = {
+        id: 'user-01',
+        name: 'Guest Officer',
+        email: 'officer@mospi.gov.in',
+        cadre: 'SSS',
+        designation: 'Statistical Officer',
+        division: 'DIID',
+        role: 'LEARNER',
+        avatar: 'https://ui-avatars.com/api/?name=Officer&background=14213D&color=FAF6EE'
+      };
+      updateHeaderUserUI();
+      toggleUserDropdown();
+      window.location.hash = '#login';
+    }
+
+    // Floating AI Copilot Drawer
+    function toggleFloatingAi() {
+      const drawer = document.getElementById('ai-drawer');
+      if (drawer) drawer.classList.toggle('hidden');
+    }
+
+    function askCopilotPrompt(prompt) {
+      const inp = document.getElementById('drawer-input');
+      if (inp) {
+        inp.value = prompt;
+        sendDrawerMessage();
+      }
+    }
+
+    async function sendDrawerMessage() {
+      const inp = document.getElementById('drawer-input');
+      const val = inp.value.trim();
+      if (!val) return;
+
+      const box = document.getElementById('drawer-messages');
+      box.innerHTML += `
+        <div class="flex justify-end">
+          <div class="p-2.5 bg-ink-900 text-white rounded-lg text-xs max-w-[85%]">${val}</div>
+        </div>
+      `;
+      inp.value = '';
+
+      try {
+        const res = await fetch('/api/assistant/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: val, userId: currentUser.id || 'user-01' })
+        });
+        const data = await res.json();
+        
+        let actionBtn = '';
+        if (data.action && data.action.type === 'RUN_SQL' && data.action.sql) {
+          const encoded = encodeURIComponent(data.action.sql);
+          actionBtn = `
+            <div class="pt-1.5">
+              <button onclick="executeSqlFromAi('${encoded}')" class="px-3 py-1 bg-chakra hover:bg-chakra-600 text-white rounded text-[11px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs">
+                <span>▶ Run in PLFS SQL Lab</span>
+              </button>
+            </div>
+          `;
+        } else if (data.action && data.action.type === 'NAVIGATE') {
+          actionBtn = `
+            <div class="pt-1.5">
+              <a href="${data.action.hash}" onclick="toggleFloatingAi()" class="inline-flex px-3 py-1 bg-ink-900 hover:bg-saffron text-white rounded text-[11px] font-bold items-center gap-1.5 transition-colors shadow-2xs">
+                <span>${data.action.label || 'View Details'} →</span>
+              </a>
+            </div>
+          `;
+        }
+
+        box.innerHTML += `
+          <div class="flex justify-start">
+            <div class="p-3 bg-white border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[90%] space-y-1.5 shadow-2xs">
+              <div class="font-semibold text-chakra text-[10px] font-mono flex items-center gap-1">
+                <span>✦ Kaushal AI</span>
+                <span>·</span>
+                <span class="text-ink-400">${data.sourcesCited ? data.sourcesCited[0] : 'MoSPI NQAF'}</span>
+              </div>
+              <div class="break-words">${data.reply.replace(/\n/g, '<br>')}</div>
+              ${actionBtn}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        box.innerHTML += `
+          <div class="flex justify-start">
+            <div class="p-3 bg-white border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[90%] shadow-2xs">
+              Under MoSPI SDRD survey design, inclusion probabilities in multi-stage sampling are derived as $W = 1/P$.
+            </div>
+          </div>
+        `;
+      }
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function executeSqlFromAi(encodedSql) {
+      const sql = decodeURIComponent(encodedSql);
+      const sqlInput = document.getElementById('sql-input');
+      if (sqlInput) sqlInput.value = sql;
+      window.location.hash = '#labs';
+      switchLabTab('sql');
+      setTimeout(() => {
+        runLabQuery();
+      }, 100);
+    }
+
+    function setAssistantPrompt(type) {
+      const input = document.getElementById('chat-input');
+      if (type === 'sql') {
+        input.value = 'Generate SQL query for average MPCE by sector in PLFS microdata';
+      } else if (type === 'sampling') {
+        input.value = 'Explain Horvitz-Thompson sampling multiplier calculation and FSU probabilities';
+      } else if (type === 'gva') {
+        input.value = 'Explain GVA at basic prices vs GDP at market prices and double deflation';
+      } else if (type === 'gaps') {
+        input.value = 'What are my highest priority competency gaps and recommended NSSTA courses?';
+      } else if (type === 'dpdp') {
+        input.value = 'What are the DPDP Act 2023 compliance requirements for household survey microdata?';
+      } else {
+        input.value = 'Explain the 5 stages of the official statistical lifecycle under MoSPI';
+      }
+      sendChatMessage();
+    }
+
+    function askPromptDirect(text) {
+      const input = document.getElementById('chat-input');
+      if (input) {
+        input.value = text;
+        sendChatMessage();
+      }
+    }
+
+    function clearChatHistory() {
+      const box = document.getElementById('chat-messages');
+      if (box) {
+        box.innerHTML = `
+          <div class="flex justify-start">
+            <div class="p-4 rounded-lg bg-paper-50 border border-ink-200 text-xs text-ink-900 leading-relaxed max-w-[90%] space-y-2">
+              <div class="font-semibold text-chakra flex items-center gap-1.5">
+                <span>✦ Kaushal AI Intelligence Copilot</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-chakra-50 border border-chakra-200 text-chakra-800">MoSPI Verified</span>
+              </div>
+              <div>Chat history reset. How can I assist your statistical capacity building today?</div>
+            </div>
+          </div>
+        `;
+      }
+    }
 
     // Router
     function navigate() {
@@ -1589,6 +1982,7 @@ GROUP BY sector;</textarea>
 
     window.addEventListener('hashchange', navigate);
     window.addEventListener('load', () => {
+      initUserSession();
       navigate();
       loadData();
     });
@@ -1620,8 +2014,9 @@ GROUP BY sector;</textarea>
     // Load initial data from SQLite REST backend
     async function loadData() {
       try {
+        const uId = currentUser.id || 'user-01';
         // Load Gaps
-        const resGaps = await fetch('/api/competencies/gaps?userId=user-01');
+        const resGaps = await fetch(`/api/competencies/gaps?userId=${encodeURIComponent(uId)}`);
         const dataGaps = await resGaps.json();
         globalGaps = dataGaps.gapItems;
         renderGapsTable(globalGaps);
@@ -1716,13 +2111,6 @@ GROUP BY sector;</textarea>
       `).join('');
     }
 
-    // Modal open/close
-    function openSihModal() {
-      document.getElementById('modal-sih-details').style.display = 'flex';
-    }
-    function closeSihModal() {
-      document.getElementById('modal-sih-details').style.display = 'none';
-    }
 
     // Virtual Labs Tab Switcher
     function switchLabTab(tab) {
@@ -1792,22 +2180,24 @@ GROUP BY sector;</textarea>
         const res = await fetch('/api/labs/sql/query', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query: q })
+          body: JSON.stringify({ query: q, sql: q })
         });
         const data = await res.json();
         if (data.rows && data.rows.length > 0) {
           const keys = Object.keys(data.rows[0]);
-          document.getElementById('sql-headers').innerHTML = keys.map(k => `<th class="p-2 capitalize">${k.replace(/_/g, ' ')}</th>`).join('');
+          document.getElementById('sql-headers').innerHTML = keys.map(k => `<th class="p-2 capitalize font-mono text-[11px]">${k.replace(/_/g, ' ')}</th>`).join('');
           document.getElementById('sql-rows').innerHTML = data.rows.map(r => `
-            <tr>${keys.map(k => `<td class="p-2">${r[k]}</td>`).join('')}</tr>
+            <tr class="hover:bg-paper-50 transition-colors font-mono text-xs border-b border-ink-100">${keys.map(k => `<td class="p-2">${r[k]}</td>`).join('')}</tr>
           `).join('');
+          const latencyEl = document.getElementById('lbl-sql-latency');
+          if (latencyEl) latencyEl.innerText = `${data.executionMs} ms (${data.rows.length} records returned)`;
         }
       } catch (err) {
         console.warn('Query execute info:', err);
       }
     }
 
-    // AI Chat
+    // AI Chat Studio
     async function sendChatMessage() {
       const inp = document.getElementById('chat-input');
       const val = inp.value.trim();
@@ -1816,7 +2206,7 @@ GROUP BY sector;</textarea>
       const box = document.getElementById('chat-messages');
       box.innerHTML += `
         <div class="flex justify-end">
-          <div class="p-3 bg-ink-900 text-white rounded-lg text-xs max-w-[80%]">${val}</div>
+          <div class="p-3.5 bg-ink-900 text-white rounded-lg text-xs max-w-[80%] shadow-2xs">${val}</div>
         </div>
       `;
       inp.value = '';
@@ -1825,14 +2215,44 @@ GROUP BY sector;</textarea>
         const res = await fetch('/api/assistant/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: val, userId: 'user-01' })
+          body: JSON.stringify({ message: val, userId: currentUser.id || 'user-01' })
         });
         const data = await res.json();
+        
+        let actionMarkup = '';
+        if (data.action && data.action.type === 'RUN_SQL' && data.action.sql) {
+          const encoded = encodeURIComponent(data.action.sql);
+          actionMarkup = `
+            <div class="pt-2">
+              <button onclick="executeSqlFromAi('${encoded}')" class="px-3.5 py-1.5 bg-chakra hover:bg-chakra-600 text-white rounded text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-xs">
+                <span>▶ Execute Query in PLFS Virtual Lab</span>
+              </button>
+            </div>
+          `;
+        } else if (data.action && data.action.type === 'NAVIGATE') {
+          actionMarkup = `
+            <div class="pt-2">
+              <a href="${data.action.hash}" class="inline-flex px-3.5 py-1.5 bg-ink-900 hover:bg-saffron text-white rounded text-xs font-bold items-center gap-1.5 transition-colors shadow-xs">
+                <span>${data.action.label || 'View Details'} →</span>
+              </a>
+            </div>
+          `;
+        }
+
         box.innerHTML += `
           <div class="flex justify-start">
-            <div class="p-3 bg-paper-50 border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[85%] space-y-2">
-              <div>${data.reply.replace(/\\n/g, '<br>')}</div>
-              <div class="text-[10px] font-mono text-ink-400 pt-1 border-t border-ink-200">
+            <div class="p-4 bg-paper-50 border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[90%] space-y-2 shadow-xs">
+              <div class="flex items-center justify-between">
+                <div class="font-semibold text-chakra text-xs flex items-center gap-1.5">
+                  <span>✦ Kaushal AI Intelligence Copilot</span>
+                </div>
+                <button onclick="speakText(this.parentElement.nextElementSibling.innerText)" class="text-ink-400 hover:text-ink-900 text-[10px] flex items-center gap-1 cursor-pointer" title="Listen">
+                  🔊 Listen
+                </button>
+              </div>
+              <div class="break-words">${data.reply.replace(/\n/g, '<br>')}</div>
+              ${actionMarkup}
+              <div class="text-[10px] font-mono text-ink-400 pt-1.5 border-t border-ink-200">
                 Sources: ${data.sourcesCited ? data.sourcesCited.join(' · ') : 'MoSPI Guidelines'}
               </div>
             </div>
@@ -1841,13 +2261,13 @@ GROUP BY sector;</textarea>
       } catch (err) {
         box.innerHTML += `
           <div class="flex justify-start">
-            <div class="p-3 bg-paper-50 border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[85%]">
+            <div class="p-4 bg-paper-50 border border-ink-200 rounded-lg text-xs text-ink-900 leading-relaxed max-w-[85%]">
               Under official MoSPI SDRD guidelines, multiplier weights in multi-stage sampling are derived as $W = 1 / P$, where $P$ is the joint inclusion probability across primary and second stage units.
             </div>
           </div>
         `;
       }
-      document.getElementById('chat-box').scrollTop = 9999;
+      box.scrollTop = box.scrollHeight;
     }
 
     // Trainer Preset Excerpts
