@@ -11,7 +11,22 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 
 const PORT = process.env.PORT || 3000;
-const DB_PATH = path.join(__dirname, 'dev.db');
+let DB_PATH = path.resolve(process.cwd(), 'dev.db');
+
+// If running in Vercel / AWS Lambda environment where filesystem is read-only except /tmp
+if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  const tmpDbPath = path.join('/tmp', 'dev.db');
+  if (!fs.existsSync(tmpDbPath)) {
+    if (fs.existsSync(DB_PATH)) {
+      try {
+        fs.copyFileSync(DB_PATH, tmpDbPath);
+      } catch (err) {
+        console.warn('Could not copy dev.db to /tmp:', err.message);
+      }
+    }
+  }
+  DB_PATH = tmpDbPath;
+}
 
 // Initialize SQLite Database
 const db = new DatabaseSync(DB_PATH);
@@ -541,8 +556,8 @@ function getSkillGaps(userId = 'user-01') {
   return { gapItems, readinessIndex, user };
 }
 
-// HTTP Server
-const server = http.createServer((req, res) => {
+// HTTP Request Handler (Compatible with Standalone Node.js & Vercel Serverless Functions)
+function requestHandler(req, res) {
   const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = parsedUrl.pathname;
 
@@ -1061,13 +1076,19 @@ Recommended blended pathway:
 
   res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
   res.end('<h1>Kaushal Setu Server Initialized</h1>');
-});
+}
 
-server.listen(PORT, () => {
-  console.log(`================================================================`);
-  console.log(`KAUSHAL SETU (कौशल सेतु) - MoSPI DIID (SIH 2026)`);
-  console.log(`Application running at: http://localhost:${PORT}`);
-  console.log(`Integrated SQLite Database: ${DB_PATH}`);
-  console.log(`Zero external npm dependencies needed for deployment!`);
-  console.log(`================================================================`);
-});
+const server = http.createServer(requestHandler);
+
+if (require.main === module) {
+  server.listen(PORT, () => {
+    console.log(`================================================================`);
+    console.log(`KAUSHAL SETU (कौशल सेतु) - MoSPI DIID (SIH 2026)`);
+    console.log(`Application running at: http://localhost:${PORT}`);
+    console.log(`Integrated SQLite Database: ${DB_PATH}`);
+    console.log(`Zero external npm dependencies needed for deployment!`);
+    console.log(`================================================================`);
+  });
+}
+
+module.exports = requestHandler;
